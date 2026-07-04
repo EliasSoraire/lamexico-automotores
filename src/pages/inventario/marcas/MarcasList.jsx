@@ -58,7 +58,7 @@ export default function MarcasList() {
     setEliminando(true)
     setErrorEliminar('')
     try {
-      await api.delete(`/api/marcas/${marcaAEliminar.id}`)
+      await api.delete(`/api/marcas/detalle?id=${marcaAEliminar.id}`)
       setMarcaAEliminar(null)
       cargarMarcas()
     } catch (err) {

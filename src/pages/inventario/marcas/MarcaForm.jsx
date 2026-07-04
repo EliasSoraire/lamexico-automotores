@@ -26,7 +26,7 @@ export default function MarcaForm() {
 
     async function cargar() {
       try {
-        const res = await api.get(`/api/marcas/${id}`)
+        const res = await api.get(`/api/marcas/detalle?id=${id}`)
         setForm({
           nombre: res.data.nombre || '',
           codigo: res.data.codigo || '',
@@ -55,7 +55,7 @@ export default function MarcaForm() {
     setGuardando(true)
     try {
       if (esEdicion) {
-        await api.put(`/api/marcas/${id}`, form)
+        await api.put(`/api/marcas/detalle?id=${id}`, form)
       } else {
         await api.post('/api/marcas', form)
       }

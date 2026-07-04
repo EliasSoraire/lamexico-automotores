@@ -29,7 +29,7 @@ export default function ModeloForm() {
     async function cargar() {
       try {
         if (esEdicion) {
-          const res = await api.get(`/api/modelos/${id}`)
+          const res = await api.get(`/api/modelos/detalle?id=${id}`)
           setForm({
             nombre: res.data.nombre || '',
             version: res.data.version || '',
@@ -54,7 +54,7 @@ export default function ModeloForm() {
     async function cargarNombreMarca() {
       if (!marcaId) return
       try {
-        const res = await api.get(`/api/marcas/${marcaId}`)
+        const res = await api.get(`/api/marcas/detalle?id=${marcaId}`)
         setNombreMarca(res.data.nombre)
       } catch {
         // silencioso: si falla, simplemente no mostramos el nombre
@@ -86,7 +86,7 @@ export default function ModeloForm() {
         moneda_id: form.moneda_id || null,
       }
       if (esEdicion) {
-        await api.put(`/api/modelos/${id}`, payload)
+        await api.put(`/api/modelos/detalle?id=${id}`, payload)
       } else {
         await api.post('/api/modelos', { ...payload, marca_id: marcaId })
       }

@@ -31,7 +31,7 @@ export default function MarcaDetalle() {
     setCargando(true)
     setError('')
     try {
-      const res = await api.get(`/api/marcas/${id}`)
+      const res = await api.get(`/api/marcas/detalle?id=${id}`)
       setMarca(res.data)
       setStats(res.estadisticas)
     } catch (err) {
@@ -80,7 +80,7 @@ export default function MarcaDetalle() {
     setEliminando(true)
     setErrorEliminar('')
     try {
-      await api.delete(`/api/modelos/${modeloAEliminar.id}`)
+      await api.delete(`/api/modelos/detalle?id=${modeloAEliminar.id}`)
       setModeloAEliminar(null)
       cargarModelos()
       cargarMarca()
