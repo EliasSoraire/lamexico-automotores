@@ -10,12 +10,14 @@ import MarcasList from './pages/inventario/marcas/MarcasList'
 import MarcaForm from './pages/inventario/marcas/MarcaForm'
 import MarcaDetalle from './pages/inventario/marcas/MarcaDetalle'
 import ModeloForm from './pages/inventario/marcas/ModeloForm'
+import ColoresList from './pages/inventario/colores/ColoresList'
+import ColorForm from './pages/inventario/colores/ColorForm'
 import { menuConfig } from './config/menuConfig'
 
 // Rutas de módulos que ya tienen pantallas propias construidas.
 // El resto de los ítems del menú se generan automáticamente más abajo
 // como "En construcción" o "Próximamente" según corresponda.
-const RUTAS_CONSTRUIDAS = new Set(['/inventario/marcas-modelos'])
+const RUTAS_CONSTRUIDAS = new Set(['/inventario/marcas-modelos', '/inventario/colores'])
 
 function generarRutasDeModulos() {
   const rutas = []
@@ -67,6 +69,11 @@ function App() {
             <Route path="/inventario/marcas-modelos/:id/editar" element={<MarcaForm />} />
             <Route path="/inventario/marcas-modelos/modelos/nuevo" element={<ModeloForm />} />
             <Route path="/inventario/marcas-modelos/modelos/:id/editar" element={<ModeloForm />} />
+
+            {/* Colores de Vehículo */}
+            <Route path="/inventario/colores" element={<ColoresList />} />
+            <Route path="/inventario/colores/nuevo" element={<ColorForm />} />
+            <Route path="/inventario/colores/:id/editar" element={<ColorForm />} />
 
             {generarRutasDeModulos()}
           </Route>
