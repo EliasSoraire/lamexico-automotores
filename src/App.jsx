@@ -12,12 +12,19 @@ import MarcaDetalle from './pages/inventario/marcas/MarcaDetalle'
 import ModeloForm from './pages/inventario/marcas/ModeloForm'
 import ColoresList from './pages/inventario/colores/ColoresList'
 import ColorForm from './pages/inventario/colores/ColorForm'
+import ClasificacionesList from './pages/inventario/clasificaciones/ClasificacionesList'
+import ClasificacionForm from './pages/inventario/clasificaciones/ClasificacionForm'
+import ClasificacionDetalle from './pages/inventario/clasificaciones/ClasificacionDetalle'
 import { menuConfig } from './config/menuConfig'
 
 // Rutas de módulos que ya tienen pantallas propias construidas.
 // El resto de los ítems del menú se generan automáticamente más abajo
 // como "En construcción" o "Próximamente" según corresponda.
-const RUTAS_CONSTRUIDAS = new Set(['/inventario/marcas-modelos', '/inventario/colores'])
+const RUTAS_CONSTRUIDAS = new Set([
+  '/inventario/marcas-modelos',
+  '/inventario/colores',
+  '/inventario/clasificaciones',
+])
 
 function generarRutasDeModulos() {
   const rutas = []
@@ -74,6 +81,12 @@ function App() {
             <Route path="/inventario/colores" element={<ColoresList />} />
             <Route path="/inventario/colores/nuevo" element={<ColorForm />} />
             <Route path="/inventario/colores/:id/editar" element={<ColorForm />} />
+
+            {/* Clasificaciones de Vehículo */}
+            <Route path="/inventario/clasificaciones" element={<ClasificacionesList />} />
+            <Route path="/inventario/clasificaciones/nueva" element={<ClasificacionForm />} />
+            <Route path="/inventario/clasificaciones/:id" element={<ClasificacionDetalle />} />
+            <Route path="/inventario/clasificaciones/:id/editar" element={<ClasificacionForm />} />
 
             {generarRutasDeModulos()}
           </Route>
