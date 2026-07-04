@@ -12,11 +12,22 @@ async function apiFetch(path, options = {}) {
     },
   })
 
-  const contentType = res.headers.get('content-type') || ''
-  const data = contentType.includes('application/json') ? await res.json() : null
+  // Intentamos parsear como JSON siempre, sin depender del header content-type
+  // (algunos entornos de desarrollo local no lo devuelven de forma consistente).
+  let data = null
+  try {
+    const texto = await res.text()
+    data = texto ? JSON.parse(texto) : null
+  } catch (err) {
+    data = null
+  }
 
   if (!res.ok) {
-    throw new Error(data?.error || `Error ${res.status}`)
+    throw new Error(data?.error || `Error ${res.status}: no se pudo completar la solicitud`)
+  }
+
+  if (data === null) {
+    throw new Error('La respuesta del servidor no tuvo el formato esperado')
   }
 
   return data

@@ -48,11 +48,23 @@ async function verMarca(req, res, id) {
           .eq('marca_id', id),
       ])
 
-    // Vehículos vendidos: vehículos de esta marca que tienen al menos una venta asociada.
-    const { count: vehiculosVendidos } = await supabaseAdmin
-      .from('ventas')
-      .select('id, vehiculos!inner(marca_id)', { count: 'exact', head: true })
-      .eq('vehiculos.marca_id', id)
+    // Vehículos vendidos: primero obtenemos los IDs de vehículos de esta marca,
+    // después contamos cuántos de esos IDs tienen una venta asociada.
+    const { data: vehiculosDeMarca } = await supabaseAdmin
+      .from('vehiculos')
+      .select('id')
+      .eq('marca_id', id)
+
+    const idsVehiculos = (vehiculosDeMarca || []).map((v) => v.id)
+
+    let vehiculosVendidos = 0
+    if (idsVehiculos.length > 0) {
+      const { count } = await supabaseAdmin
+        .from('ventas')
+        .select('id', { count: 'exact', head: true })
+        .in('vehiculo_id', idsVehiculos)
+      vehiculosVendidos = count || 0
+    }
 
     return res.status(200).json({
       data: marca,
