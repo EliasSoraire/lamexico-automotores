@@ -4,7 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "concurrently -n VITE,API -c blue,green \"npm:dev:vite\" \"npm:dev:api\"",
+    "dev:vite": "vite",
+    "dev:api": "node server/bootstrap.js",
     "build": "vite build",
     "lint": "oxlint",
     "preview": "vite preview"
@@ -23,6 +25,9 @@
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.3",
+    "concurrently": "^10.0.3",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
     "oxlint": "^1.71.0",
     "tailwindcss": "^4.3.2",
     "vite": "^8.1.1"
