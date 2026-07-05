@@ -20,6 +20,9 @@ import TitularStockForm from './pages/configuracion/titulares-stock/TitularStock
 import VehiculosList from './pages/inventario/vehiculos/VehiculosList'
 import VehiculoForm from './pages/inventario/vehiculos/VehiculoForm'
 import VehiculoDetalle from './pages/inventario/vehiculos/VehiculoDetalle'
+import UsuariosList from './pages/configuracion/usuarios/UsuariosList'
+import UsuarioForm from './pages/configuracion/usuarios/UsuarioForm'
+import UsuarioDetalle from './pages/configuracion/usuarios/UsuarioDetalle'
 import { menuConfig } from './config/menuConfig'
 
 // Rutas de módulos que ya tienen pantallas propias construidas.
@@ -31,6 +34,7 @@ const RUTAS_CONSTRUIDAS = new Set([
   '/inventario/clasificaciones',
   '/configuracion/titulares-stock',
   '/inventario/vehiculos',
+  '/configuracion/usuarios',
 ])
 
 function generarRutasDeModulos() {
@@ -105,6 +109,12 @@ function App() {
             <Route path="/inventario/vehiculos/nuevo" element={<VehiculoForm />} />
             <Route path="/inventario/vehiculos/:id" element={<VehiculoDetalle />} />
             <Route path="/inventario/vehiculos/:id/editar" element={<VehiculoForm />} />
+
+            {/* Usuarios */}
+            <Route path="/configuracion/usuarios" element={<UsuariosList />} />
+            <Route path="/configuracion/usuarios/nuevo" element={<UsuarioForm />} />
+            <Route path="/configuracion/usuarios/:id" element={<UsuarioDetalle />} />
+            <Route path="/configuracion/usuarios/:id/editar" element={<UsuarioForm />} />
 
             {generarRutasDeModulos()}
           </Route>
