@@ -19,9 +19,10 @@ async function listarModelos(req, res) {
     }
 
     const page = Math.max(parseInt(req.query.page) || 1, 1)
-    const pageSize = Math.min(Math.max(parseInt(req.query.pageSize) || 25, 1), 100)
+    const pageSize = Math.min(Math.max(parseInt(req.query.pageSize) || 25, 1), 200)
     const busqueda = (req.query.busqueda || '').trim()
     const estado = req.query.estado || 'activos'
+    const anio = req.query.anio
 
     const desde = (page - 1) * pageSize
     const hasta = desde + pageSize - 1
@@ -29,7 +30,7 @@ async function listarModelos(req, res) {
     let query = supabaseAdmin
       .from('modelos')
       .select(
-        'id, nombre, version, precio_lista, moneda_id, activo, monedas(simbolo), vehiculos:vehiculos(count)',
+        'id, nombre, version, anio, precio_lista, moneda_id, activo, monedas(simbolo), vehiculos:vehiculos(count)',
         { count: 'exact' }
       )
       .eq('marca_id', marca_id)
@@ -37,6 +38,7 @@ async function listarModelos(req, res) {
     if (estado === 'activos') query = query.eq('activo', true)
     if (estado === 'inactivos') query = query.eq('activo', false)
     if (busqueda) query = query.ilike('nombre', `%${busqueda}%`)
+    if (anio) query = query.eq('anio', anio)
 
     query = query.order('nombre', { ascending: true }).range(desde, hasta)
 
@@ -51,6 +53,7 @@ async function listarModelos(req, res) {
       id: m.id,
       nombre: m.nombre,
       version: m.version,
+      anio: m.anio,
       precio_lista: m.precio_lista,
       moneda_id: m.moneda_id,
       simbolo_moneda: m.monedas?.simbolo || '',
@@ -73,7 +76,7 @@ async function listarModelos(req, res) {
 
 async function crearModelo(req, res) {
   try {
-    const { marca_id, nombre, version, precio_lista, moneda_id, descripcion } = req.body || {}
+    const { marca_id, nombre, version, anio, precio_lista, moneda_id, descripcion } = req.body || {}
 
     if (!marca_id || !nombre || !nombre.trim()) {
       return res.status(400).json({ error: 'Marca y nombre del modelo son obligatorios' })
@@ -85,6 +88,7 @@ async function crearModelo(req, res) {
         marca_id,
         nombre: nombre.trim(),
         version: version?.trim() || null,
+        anio: anio || null,
         precio_lista: precio_lista || null,
         moneda_id: moneda_id || null,
         descripcion: descripcion?.trim() || null,

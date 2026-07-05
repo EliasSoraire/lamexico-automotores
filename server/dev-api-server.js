@@ -21,7 +21,17 @@ import coloresIndex from '../api/colores/index.js'
 import coloresDetalle from '../api/colores/detalle.js'
 import clasificacionesIndex from '../api/clasificaciones/index.js'
 import clasificacionesDetalle from '../api/clasificaciones/detalle.js'
+import titularesIndex from '../api/titulares-stock/index.js'
+import titularesDetalle from '../api/titulares-stock/detalle.js'
 import monedasIndex from '../api/monedas/index.js'
+import catalogosVehiculo from '../api/catalogos-vehiculo/index.js'
+import vehiculosIndex from '../api/vehiculos/index.js'
+import vehiculosDetalle from '../api/vehiculos/detalle.js'
+import vehiculosEstado from '../api/vehiculos/estado.js'
+import vehiculosGastos from '../api/vehiculos/gastos.js'
+import vehiculosMantenimiento from '../api/vehiculos/mantenimiento.js'
+import vehiculosFotos from '../api/vehiculos/fotos.js'
+import vehiculosTiposPropiedad from '../api/vehiculos/tipos-propiedad.js'
 
 const app = express()
 app.use(express.json())
@@ -39,7 +49,17 @@ const rutas = [
   ['/api/colores/detalle', coloresDetalle],
   ['/api/clasificaciones', clasificacionesIndex],
   ['/api/clasificaciones/detalle', clasificacionesDetalle],
+  ['/api/titulares-stock', titularesIndex],
+  ['/api/titulares-stock/detalle', titularesDetalle],
   ['/api/monedas', monedasIndex],
+  ['/api/catalogos-vehiculo', catalogosVehiculo],
+  ['/api/vehiculos', vehiculosIndex],
+  ['/api/vehiculos/detalle', vehiculosDetalle],
+  ['/api/vehiculos/estado', vehiculosEstado],
+  ['/api/vehiculos/gastos', vehiculosGastos],
+  ['/api/vehiculos/mantenimiento', vehiculosMantenimiento],
+  ['/api/vehiculos/fotos', vehiculosFotos],
+  ['/api/vehiculos/tipos-propiedad', vehiculosTiposPropiedad],
 ]
 
 rutas.forEach(([ruta, handler]) => {

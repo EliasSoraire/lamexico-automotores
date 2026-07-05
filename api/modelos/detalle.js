@@ -32,7 +32,7 @@ async function verModelo(req, res, id) {
 
 async function actualizarModelo(req, res, id) {
   try {
-    const { nombre, activo, version, precio_lista, moneda_id, descripcion } = req.body || {}
+    const { nombre, activo, version, anio, precio_lista, moneda_id, descripcion } = req.body || {}
 
     if (!nombre || !nombre.trim()) {
       return res.status(400).json({ error: 'El nombre del modelo es obligatorio' })
@@ -44,6 +44,7 @@ async function actualizarModelo(req, res, id) {
         nombre: nombre.trim(),
         activo: !!activo,
         version: version?.trim() || null,
+        anio: anio || null,
         precio_lista: precio_lista || null,
         moneda_id: moneda_id || null,
         descripcion: descripcion?.trim() || null,

@@ -15,6 +15,11 @@ import ColorForm from './pages/inventario/colores/ColorForm'
 import ClasificacionesList from './pages/inventario/clasificaciones/ClasificacionesList'
 import ClasificacionForm from './pages/inventario/clasificaciones/ClasificacionForm'
 import ClasificacionDetalle from './pages/inventario/clasificaciones/ClasificacionDetalle'
+import TitularesStockList from './pages/configuracion/titulares-stock/TitularesStockList'
+import TitularStockForm from './pages/configuracion/titulares-stock/TitularStockForm'
+import VehiculosList from './pages/inventario/vehiculos/VehiculosList'
+import VehiculoForm from './pages/inventario/vehiculos/VehiculoForm'
+import VehiculoDetalle from './pages/inventario/vehiculos/VehiculoDetalle'
 import { menuConfig } from './config/menuConfig'
 
 // Rutas de módulos que ya tienen pantallas propias construidas.
@@ -24,6 +29,8 @@ const RUTAS_CONSTRUIDAS = new Set([
   '/inventario/marcas-modelos',
   '/inventario/colores',
   '/inventario/clasificaciones',
+  '/configuracion/titulares-stock',
+  '/inventario/vehiculos',
 ])
 
 function generarRutasDeModulos() {
@@ -87,6 +94,17 @@ function App() {
             <Route path="/inventario/clasificaciones/nueva" element={<ClasificacionForm />} />
             <Route path="/inventario/clasificaciones/:id" element={<ClasificacionDetalle />} />
             <Route path="/inventario/clasificaciones/:id/editar" element={<ClasificacionForm />} />
+
+            {/* Titulares de Stock */}
+            <Route path="/configuracion/titulares-stock" element={<TitularesStockList />} />
+            <Route path="/configuracion/titulares-stock/nuevo" element={<TitularStockForm />} />
+            <Route path="/configuracion/titulares-stock/:id/editar" element={<TitularStockForm />} />
+
+            {/* Vehículos */}
+            <Route path="/inventario/vehiculos" element={<VehiculosList />} />
+            <Route path="/inventario/vehiculos/nuevo" element={<VehiculoForm />} />
+            <Route path="/inventario/vehiculos/:id" element={<VehiculoDetalle />} />
+            <Route path="/inventario/vehiculos/:id/editar" element={<VehiculoForm />} />
 
             {generarRutasDeModulos()}
           </Route>

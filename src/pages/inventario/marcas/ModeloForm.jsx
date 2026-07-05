@@ -16,6 +16,7 @@ export default function ModeloForm() {
   const [form, setForm] = useState({
     nombre: '',
     version: '',
+    anio: '',
     moneda_id: '',
     precio_lista: '',
     descripcion: '',
@@ -33,6 +34,7 @@ export default function ModeloForm() {
           setForm({
             nombre: res.data.nombre || '',
             version: res.data.version || '',
+            anio: res.data.anio || '',
             moneda_id: res.data.moneda_id || '',
             precio_lista: res.data.precio_lista ?? '',
             descripcion: res.data.descripcion || '',
@@ -82,6 +84,7 @@ export default function ModeloForm() {
     try {
       const payload = {
         ...form,
+        anio: form.anio === '' ? null : Number(form.anio),
         precio_lista: form.precio_lista === '' ? null : Number(form.precio_lista),
         moneda_id: form.moneda_id || null,
       }
@@ -153,6 +156,17 @@ export default function ModeloForm() {
               value={form.version}
               onChange={(e) => setForm({ ...form, version: e.target.value })}
               placeholder="Ej: XEI 1.8, SE Plus, LX"
+              className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div>
+            <label className="text-sm font-medium text-slate-700 mb-1 block">Año</label>
+            <input
+              type="number"
+              value={form.anio}
+              onChange={(e) => setForm({ ...form, anio: e.target.value })}
+              placeholder="Ej: 2024"
               className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
