@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { Save, Plus } from 'lucide-react'
+import { Save, Plus, AlertTriangle } from 'lucide-react'
 import { api } from '../../../lib/api'
 import FotosVehiculo from '../../../components/vehiculos/FotosVehiculo'
 
@@ -59,6 +59,7 @@ export default function VehiculoForm() {
   const [titulares, setTitulares] = useState([])
   const [clasificaciones, setClasificaciones] = useState([])
   const [tiposPropiedad, setTiposPropiedad] = useState([])
+  const [configGeneral, setConfigGeneral] = useState(null)
 
   // Crear color al vuelo
   const [creandoColor, setCreandoColor] = useState(false)
@@ -89,6 +90,7 @@ export default function VehiculoForm() {
 
     // Tipos de propiedad no tiene endpoint propio: lo resolvemos con una consulta liviana embebida
     api.get('/api/vehiculos/tipos-propiedad').then((r) => setTiposPropiedad(r.data)).catch(() => {})
+    api.get('/api/configuracion-general').then((r) => setConfigGeneral(r.data)).catch(() => {})
   }, [])
 
   useEffect(() => {
@@ -146,6 +148,25 @@ export default function VehiculoForm() {
   }, [form.marca_id, form.año_modelo])
 
   const esConsignacion = tiposPropiedad.find((t) => t.id === Number(form.tipo_propiedad_id))?.nombre === 'En Consignación'
+
+  const alertaInventario = (() => {
+    if (esConsignacion || !configGeneral) return null
+    const motivos = []
+    const anioActual = new Date().getFullYear()
+
+    if (configGeneral.antiguedad_maxima_anios && form.año_modelo) {
+      const antiguedad = anioActual - Number(form.año_modelo)
+      if (antiguedad > configGeneral.antiguedad_maxima_anios) {
+        motivos.push(`la antigüedad (${antiguedad} años) supera el máximo permitido (${configGeneral.antiguedad_maxima_anios} años)`)
+      }
+    }
+    if (configGeneral.kilometraje_maximo && form.kilometraje) {
+      if (Number(form.kilometraje) > configGeneral.kilometraje_maximo) {
+        motivos.push(`el kilometraje (${Number(form.kilometraje).toLocaleString('es-AR')} km) supera el máximo permitido (${Number(configGeneral.kilometraje_maximo).toLocaleString('es-AR')} km)`)
+      }
+    }
+    return motivos.length > 0 ? motivos : null
+  })()
 
   function actualizar(campo, valor) {
     setForm((f) => ({ ...f, [campo]: valor }))
@@ -245,6 +266,14 @@ export default function VehiculoForm() {
         <form onSubmit={handleSubmit}>
           {tab === 'Básicos' && (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {alertaInventario && (
+                <div className="sm:col-span-2 flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-lg px-4 py-3">
+                  <AlertTriangle size={16} className="text-amber-500 mt-0.5 shrink-0" />
+                  <p className="text-xs text-amber-700">
+                    Atención: este vehículo supera los límites configurados en Configuración General — {alertaInventario.join('; ')}.
+                  </p>
+                </div>
+              )}
               <Select label="Condición *" value={form.condicion_id} onChange={(v) => actualizar('condicion_id', v)} opciones={condiciones} placeholder="Seleccione" />
               <div />
               <Input label="Año Modelo" type="number" value={form.año_modelo} onChange={(v) => actualizar('año_modelo', v)} />

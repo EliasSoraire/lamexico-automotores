@@ -35,6 +35,7 @@ import vehiculosTiposPropiedad from '../api/vehiculos/tipos-propiedad.js'
 import usuariosIndex from '../api/usuarios/index.js'
 import usuariosDetalle from '../api/usuarios/detalle.js'
 import dashboardIndex from '../api/dashboard/index.js'
+import configuracionGeneral from '../api/configuracion-general/index.js'
 
 const app = express()
 app.use(express.json())
@@ -66,6 +67,7 @@ const rutas = [
   ['/api/usuarios', usuariosIndex],
   ['/api/usuarios/detalle', usuariosDetalle],
   ['/api/dashboard', dashboardIndex],
+  ['/api/configuracion-general', configuracionGeneral],
 ]
 
 rutas.forEach(([ruta, handler]) => {
