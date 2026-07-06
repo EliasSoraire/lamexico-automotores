@@ -24,6 +24,7 @@ import UsuariosList from './pages/configuracion/usuarios/UsuariosList'
 import UsuarioForm from './pages/configuracion/usuarios/UsuarioForm'
 import UsuarioDetalle from './pages/configuracion/usuarios/UsuarioDetalle'
 import ConfiguracionGeneral from './pages/configuracion/general/ConfiguracionGeneral'
+import Perfil from './pages/perfil/Perfil'
 import { menuConfig } from './config/menuConfig'
 
 // Rutas de módulos que ya tienen pantallas propias construidas.
@@ -120,6 +121,9 @@ function App() {
 
             {/* Configuración General */}
             <Route path="/configuracion/general" element={<ConfiguracionGeneral />} />
+
+            {/* Mi Perfil */}
+            <Route path="/perfil" element={<Perfil />} />
 
             {generarRutasDeModulos()}
           </Route>

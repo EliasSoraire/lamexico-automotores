@@ -219,6 +219,7 @@ export default function VehiculosList() {
       )}
 
       <div className="bg-white border border-slate-400 rounded-xl overflow-hidden">
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
             <tr className="bg-slate-50 text-left text-xs font-semibold text-slate-700 uppercase">
@@ -277,6 +278,7 @@ export default function VehiculosList() {
               ))}
           </tbody>
         </table>
+        </div>
 
         <div className="px-4">
           <Paginacion page={page} totalPages={paginacion.totalPages} total={paginacion.total} pageSize={pageSize} onPageChange={setPage} />

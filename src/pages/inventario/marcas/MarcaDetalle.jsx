@@ -241,6 +241,7 @@ export default function MarcaDetalle() {
           </button>
         </form>
 
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
             <tr className="bg-slate-50 text-left text-xs font-semibold text-slate-700 uppercase">
@@ -309,6 +310,7 @@ export default function MarcaDetalle() {
               ))}
           </tbody>
         </table>
+        </div>
 
         <Paginacion
           page={page}

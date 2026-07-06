@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { useLocation } from 'react-router-dom'
-import { Bell, ChevronDown, LogOut, Building2, Menu } from 'lucide-react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { Bell, ChevronDown, LogOut, Building2, Menu, User } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import { menuConfig } from '../config/menuConfig'
 
@@ -20,6 +20,7 @@ function useNombrePantalla() {
 
 export default function Topbar({ onAbrirMenuMobil }) {
   const { usuario, logout } = useAuth()
+  const navigate = useNavigate()
   const [menuAbierto, setMenuAbierto] = useState(false)
   const nombrePantalla = useNombrePantalla()
 
@@ -80,7 +81,18 @@ export default function Topbar({ onAbrirMenuMobil }) {
                 className="fixed inset-0 z-10"
                 onClick={() => setMenuAbierto(false)}
               />
-              <div className="absolute right-0 mt-2 w-44 bg-white border border-slate-400 rounded-lg shadow-lg z-20 py-1">
+              <div className="absolute right-0 mt-2 w-56 bg-white border border-slate-400 rounded-lg shadow-lg z-20 py-1">
+                <div className="px-3 py-2 border-b border-slate-100">
+                  <p className="text-sm font-medium text-slate-800 truncate">{usuario?.nombre_completo}</p>
+                  <p className="text-xs text-slate-600 truncate">{usuario?.email}</p>
+                </div>
+                <button type="button"
+                  onClick={() => { setMenuAbierto(false); navigate('/perfil') }}
+                  className="w-full flex items-center gap-2 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
+                >
+                  <User size={15} />
+                  Mi Perfil
+                </button>
                 <button type="button"
                   onClick={logout}
                   className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50"

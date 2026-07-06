@@ -123,6 +123,7 @@ export default function VehiculoDetalle() {
           </button>
         </div>
 
+        <div className="overflow-x-auto">
         <table className="w-full text-sm mb-3">
           <thead>
             <tr className="bg-slate-50 text-left text-xs font-semibold text-slate-700 uppercase">
@@ -155,6 +156,7 @@ export default function VehiculoDetalle() {
             ))}
           </tbody>
         </table>
+        </div>
 
         <div className="border-t border-slate-100 pt-3 flex justify-end gap-8 text-sm">
           <div className="text-right">
@@ -181,6 +183,7 @@ export default function VehiculoDetalle() {
 
         <FormMantenimiento vehiculoId={id} onGuardado={cargarMantenimiento} />
 
+        <div className="overflow-x-auto">
         <table className="w-full text-sm mt-4">
           <thead>
             <tr className="bg-slate-50 text-left text-xs font-semibold text-slate-700 uppercase">
@@ -215,6 +218,7 @@ export default function VehiculoDetalle() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
 
       {/* Archivos Adjuntos */}

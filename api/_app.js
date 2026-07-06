@@ -26,6 +26,8 @@ import usuariosIndex from './_routes/usuarios/index.js'
 import usuariosDetalle from './_routes/usuarios/detalle.js'
 import dashboardIndex from './_routes/dashboard/index.js'
 import configuracionGeneral from './_routes/configuracion-general/index.js'
+import perfilIndex from './_routes/perfil/index.js'
+import perfilPassword from './_routes/perfil/password.js'
 
 const app = express()
 app.use(express.json())
@@ -58,6 +60,8 @@ const rutas = [
   ['/api/usuarios/detalle', usuariosDetalle],
   ['/api/dashboard', dashboardIndex],
   ['/api/configuracion-general', configuracionGeneral],
+  ['/api/perfil', perfilIndex],
+  ['/api/perfil/password', perfilPassword],
 ]
 
 rutas.forEach(([ruta, handler]) => {
