@@ -68,7 +68,7 @@ export default function MarcaForm() {
   }
 
   if (cargando) {
-    return <div className="text-sm text-slate-400 py-10 text-center">Cargando...</div>
+    return <div className="text-sm text-slate-600 py-10 text-center">Cargando...</div>
   }
 
   return (
@@ -77,16 +77,16 @@ export default function MarcaForm() {
         <h1 className="text-xl font-bold text-slate-800">
           {esEdicion ? `Editar Marca: ${form.nombre}` : 'Nueva Marca'}
         </h1>
-        <button
+        <button type="button"
           onClick={() => navigate('/inventario/marcas-modelos')}
-          className="flex items-center gap-1.5 text-sm font-medium text-slate-600 border border-slate-200 rounded-lg px-3 py-1.5 hover:bg-slate-50"
+          className="flex items-center gap-1.5 text-sm font-medium text-slate-600 border border-slate-400 rounded-lg px-3 py-1.5 hover:bg-slate-50"
         >
           <ArrowLeft size={15} />
           Volver
         </button>
       </div>
 
-      <div className="bg-white border border-slate-200 rounded-xl p-6 max-w-2xl">
+      <div className="bg-white border border-slate-400 rounded-xl p-6 max-w-2xl">
         {error && (
           <div className="mb-4 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
             {error}
@@ -103,7 +103,7 @@ export default function MarcaForm() {
                 required
                 value={form.nombre}
                 onChange={(e) => setForm({ ...form, nombre: e.target.value })}
-                className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div>
@@ -112,9 +112,9 @@ export default function MarcaForm() {
                 maxLength={10}
                 value={form.codigo}
                 onChange={(e) => setForm({ ...form, codigo: e.target.value })}
-                className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <p className="text-xs text-slate-400 mt-1">Código único de identificación (máximo 10 caracteres)</p>
+              <p className="text-xs text-slate-600 mt-1">Código único de identificación (máximo 10 caracteres)</p>
             </div>
           </div>
 
@@ -124,7 +124,7 @@ export default function MarcaForm() {
               value={form.descripcion}
               onChange={(e) => setForm({ ...form, descripcion: e.target.value })}
               rows={3}
-              className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -136,9 +136,9 @@ export default function MarcaForm() {
               value={form.logo_url}
               onChange={(e) => setForm({ ...form, logo_url: e.target.value })}
               placeholder="https://ejemplo.com/logo.png"
-              className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            {esEdicion && <p className="text-xs text-slate-400 mt-1">URL del logo de la marca</p>}
+            {esEdicion && <p className="text-xs text-slate-600 mt-1">URL del logo de la marca</p>}
           </div>
 
           {esEdicion && (
@@ -148,11 +148,11 @@ export default function MarcaForm() {
                   type="checkbox"
                   checked={form.activa}
                   onChange={(e) => setForm({ ...form, activa: e.target.checked })}
-                  className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                  className="rounded border-slate-400 text-blue-600 focus:ring-blue-500"
                 />
                 Marca activa
               </label>
-              <p className="text-xs text-slate-400 mt-1 ml-6">
+              <p className="text-xs text-slate-600 mt-1 ml-6">
                 Las marcas activas aparecerán disponibles para crear modelos y vehículos
               </p>
 
@@ -174,7 +174,7 @@ export default function MarcaForm() {
                 type="checkbox"
                 checked={form.favorita}
                 onChange={(e) => setForm({ ...form, favorita: e.target.checked })}
-                className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                className="rounded border-slate-400 text-blue-600 focus:ring-blue-500"
               />
               Marca favorita (se priorizará en selectores)
             </label>
@@ -201,7 +201,7 @@ export default function MarcaForm() {
             <button
               type="button"
               onClick={() => navigate('/inventario/marcas-modelos')}
-              className="px-4 py-2 text-sm rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50"
+              className="px-4 py-2 text-sm rounded-lg border border-slate-400 text-slate-600 hover:bg-slate-50"
             >
               {esEdicion ? 'Volver al Listado' : 'Cancelar'}
             </button>

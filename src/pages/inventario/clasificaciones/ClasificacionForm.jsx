@@ -67,7 +67,7 @@ export default function ClasificacionForm() {
   const hexPreview = HEX_VALIDO.test(form.color_hex) ? form.color_hex : '#cccccc'
 
   if (cargando) {
-    return <div className="text-sm text-slate-400 py-10 text-center">Cargando...</div>
+    return <div className="text-sm text-slate-600 py-10 text-center">Cargando...</div>
   }
 
   return (
@@ -76,7 +76,7 @@ export default function ClasificacionForm() {
         {esEdicion ? `Editar Clasificación: ${form.nombre}` : 'Nueva Clasificación de Vehículo'}
       </h1>
 
-      <div className="bg-white border border-slate-200 rounded-xl p-6 max-w-2xl">
+      <div className="bg-white border border-slate-400 rounded-xl p-6 max-w-2xl">
         {error && (
           <div className="mb-4 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
             {error}
@@ -92,7 +92,7 @@ export default function ClasificacionForm() {
               required
               value={form.nombre}
               onChange={(e) => setForm({ ...form, nombre: e.target.value })}
-              className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -102,7 +102,7 @@ export default function ClasificacionForm() {
               value={form.descripcion}
               onChange={(e) => setForm({ ...form, descripcion: e.target.value })}
               rows={3}
-              className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -116,17 +116,17 @@ export default function ClasificacionForm() {
                   type="color"
                   value={hexPreview}
                   onChange={(e) => setForm({ ...form, color_hex: e.target.value })}
-                  className="w-10 h-10 rounded border border-slate-300 cursor-pointer"
+                  className="w-10 h-10 rounded border border-slate-400 cursor-pointer"
                 />
                 <input
                   required
                   value={form.color_hex}
                   onChange={(e) => setForm({ ...form, color_hex: e.target.value })}
                   placeholder="#3B82F6"
-                  className="flex-1 text-sm border border-slate-300 rounded-lg px-3 py-2 font-mono focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="flex-1 text-sm border border-slate-400 rounded-lg px-3 py-2 font-mono focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-              <p className="text-xs text-slate-400 mt-1">Seleccione un color para la clasificación.</p>
+              <p className="text-xs text-slate-600 mt-1">Seleccione un color para la clasificación.</p>
             </div>
 
             <label className="flex items-center gap-2 text-sm font-medium text-slate-700 pb-6">
@@ -134,7 +134,7 @@ export default function ClasificacionForm() {
                 type="checkbox"
                 checked={form.activo}
                 onChange={(e) => setForm({ ...form, activo: e.target.checked })}
-                className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                className="rounded border-slate-400 text-blue-600 focus:ring-blue-500"
               />
               Activo
             </label>
@@ -144,7 +144,7 @@ export default function ClasificacionForm() {
             <button
               type="button"
               onClick={() => navigate('/inventario/clasificaciones')}
-              className="px-4 py-2 text-sm rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50"
+              className="px-4 py-2 text-sm rounded-lg border border-slate-400 text-slate-600 hover:bg-slate-50"
             >
               Cancelar
             </button>

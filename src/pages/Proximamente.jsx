@@ -7,7 +7,7 @@ export default function Proximamente({ nombre }) {
         <Clock size={28} className="text-blue-600" />
       </div>
       <h2 className="text-lg font-semibold text-slate-800 mb-1">Disponible próximamente</h2>
-      <p className="text-sm text-slate-500 max-w-sm">
+      <p className="text-sm text-slate-700 max-w-sm">
         El módulo <strong>{nombre}</strong> va a estar disponible en la próxima entrega.
       </p>
     </div>

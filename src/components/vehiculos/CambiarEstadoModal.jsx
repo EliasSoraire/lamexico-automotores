@@ -32,7 +32,7 @@ export default function CambiarEstadoModal({ vehiculo, estados, onCancelar, onCo
           <RefreshCw size={18} className="text-purple-600" />
           <h3 className="font-semibold text-slate-800">Cambiar estado</h3>
         </div>
-        <p className="text-sm text-slate-500 mb-3">
+        <p className="text-sm text-slate-700 mb-3">
           {vehiculo.marcas?.nombre} {vehiculo.modelos?.nombre} — Patente {vehiculo.patente}
         </p>
 
@@ -45,7 +45,7 @@ export default function CambiarEstadoModal({ vehiculo, estados, onCancelar, onCo
         <select
           value={nuevoEstado}
           onChange={(e) => setNuevoEstado(e.target.value)}
-          className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="">Seleccionar nuevo estado...</option>
           {estados
@@ -56,14 +56,14 @@ export default function CambiarEstadoModal({ vehiculo, estados, onCancelar, onCo
         </select>
 
         <div className="flex justify-end gap-2">
-          <button
+          <button type="button"
             onClick={() => { onCancelar(); setNuevoEstado(''); setError('') }}
             disabled={guardando}
-            className="px-4 py-2 text-sm rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50"
+            className="px-4 py-2 text-sm rounded-lg border border-slate-400 text-slate-600 hover:bg-slate-50"
           >
             Cancelar
           </button>
-          <button
+          <button type="button"
             onClick={handleConfirmar}
             disabled={guardando}
             className="px-4 py-2 text-sm rounded-lg bg-purple-600 hover:bg-purple-700 disabled:bg-purple-300 text-white font-medium"

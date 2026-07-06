@@ -61,7 +61,7 @@ export default function TitularesStockList() {
           <IdCard size={20} className="text-blue-600" />
           Titulares de Stock
         </h1>
-        <button
+        <button type="button"
           onClick={() => navigate('/configuracion/titulares-stock/nuevo')}
           className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg px-4 py-2"
         >
@@ -76,10 +76,10 @@ export default function TitularesStockList() {
         </div>
       )}
 
-      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
+      <div className="bg-white border border-slate-400 rounded-xl overflow-hidden">
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-slate-50 text-left text-xs font-semibold text-slate-500 uppercase">
+            <tr className="bg-slate-50 text-left text-xs font-semibold text-slate-700 uppercase">
               <th className="px-4 py-3">Nombre / Razón Social</th>
               <th className="px-4 py-3">Estado</th>
               <th className="px-4 py-3">Acciones</th>
@@ -88,14 +88,14 @@ export default function TitularesStockList() {
           <tbody className="divide-y divide-slate-100">
             {cargando && (
               <tr>
-                <td colSpan={3} className="px-4 py-8 text-center text-slate-400">
+                <td colSpan={3} className="px-4 py-8 text-center text-slate-600">
                   Cargando...
                 </td>
               </tr>
             )}
             {!cargando && titulares.length === 0 && (
               <tr>
-                <td colSpan={3} className="px-4 py-8 text-center text-slate-400">
+                <td colSpan={3} className="px-4 py-8 text-center text-slate-600">
                   No hay titulares registrados.
                 </td>
               </tr>
@@ -107,22 +107,22 @@ export default function TitularesStockList() {
                   <td className="px-4 py-3">
                     <span
                       className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-                        t.activo ? 'bg-green-50 text-green-700' : 'bg-slate-100 text-slate-500'
+                        t.activo ? 'bg-green-50 text-green-700' : 'bg-slate-100 text-slate-700'
                       }`}
                     >
                       {t.activo ? 'Activo' : 'Inactivo'}
                     </span>
                   </td>
                   <td className="px-4 py-3">
-                    <div className="flex items-center gap-2 text-slate-400">
-                      <button
+                    <div className="flex items-center gap-2 text-slate-600">
+                      <button type="button"
                         onClick={() => navigate(`/configuracion/titulares-stock/${t.id}/editar`)}
                         className="hover:text-amber-600"
                         title="Editar"
                       >
                         <Pencil size={16} />
                       </button>
-                      <button
+                      <button type="button"
                         onClick={() => setAEliminar(t)}
                         className="hover:text-red-600"
                         title="Eliminar"

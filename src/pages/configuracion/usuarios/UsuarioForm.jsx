@@ -63,7 +63,7 @@ export default function UsuarioForm() {
   }
 
   if (cargando) {
-    return <div className="text-sm text-slate-400 py-10 text-center">Cargando...</div>
+    return <div className="text-sm text-slate-600 py-10 text-center">Cargando...</div>
   }
 
   return (
@@ -73,18 +73,18 @@ export default function UsuarioForm() {
           <h1 className="text-xl font-bold text-slate-800">
             {esEdicion ? 'Editar Usuario' : 'Crear Nuevo Usuario'}
           </h1>
-          {!esEdicion && <p className="text-sm text-slate-500">Crea un nuevo usuario y asigna sus datos inmediatamente</p>}
+          {!esEdicion && <p className="text-sm text-slate-700">Crea un nuevo usuario y asigna sus datos inmediatamente</p>}
         </div>
-        <button
+        <button type="button"
           onClick={() => navigate('/configuracion/usuarios')}
-          className="flex items-center gap-1.5 text-sm font-medium text-slate-600 border border-slate-200 rounded-lg px-3 py-1.5 hover:bg-slate-50"
+          className="flex items-center gap-1.5 text-sm font-medium text-slate-600 border border-slate-400 rounded-lg px-3 py-1.5 hover:bg-slate-50"
         >
           <ArrowLeft size={15} />
           Volver
         </button>
       </div>
 
-      <div className="bg-white border border-slate-200 rounded-xl p-6 max-w-2xl">
+      <div className="bg-white border border-slate-400 rounded-xl p-6 max-w-2xl">
         <h3 className="text-sm font-semibold text-slate-800 mb-4">Información del Usuario</h3>
 
         {error && (
@@ -103,7 +103,7 @@ export default function UsuarioForm() {
                 required
                 value={form.nombre_completo}
                 onChange={(e) => setForm({ ...form, nombre_completo: e.target.value })}
-                className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div>
@@ -115,7 +115,7 @@ export default function UsuarioForm() {
                 type="email"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div>
@@ -128,7 +128,7 @@ export default function UsuarioForm() {
                 value={form.password}
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
                 placeholder={esEdicion ? 'Dejar en blanco para no cambiarla' : ''}
-                className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div>
@@ -140,7 +140,7 @@ export default function UsuarioForm() {
                 type="password"
                 value={form.confirmar_password}
                 onChange={(e) => setForm({ ...form, confirmar_password: e.target.value })}
-                className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div>
@@ -148,7 +148,7 @@ export default function UsuarioForm() {
               <input
                 value={form.dni}
                 onChange={(e) => setForm({ ...form, dni: e.target.value })}
-                className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div className="flex items-center gap-4 pt-6">
@@ -157,7 +157,7 @@ export default function UsuarioForm() {
                   type="checkbox"
                   checked={form.es_socio}
                   onChange={(e) => setForm({ ...form, es_socio: e.target.checked })}
-                  className="rounded border-slate-300 text-blue-600"
+                  className="rounded border-slate-400 text-blue-600"
                 />
                 ¿Es Socio?
               </label>
@@ -167,7 +167,7 @@ export default function UsuarioForm() {
                     type="checkbox"
                     checked={form.activo}
                     onChange={(e) => setForm({ ...form, activo: e.target.checked })}
-                    className="rounded border-slate-300 text-blue-600"
+                    className="rounded border-slate-400 text-blue-600"
                   />
                   Activo
                 </label>
@@ -179,7 +179,7 @@ export default function UsuarioForm() {
             <button
               type="button"
               onClick={() => navigate('/configuracion/usuarios')}
-              className="px-4 py-2 text-sm rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50"
+              className="px-4 py-2 text-sm rounded-lg border border-slate-400 text-slate-600 hover:bg-slate-50"
             >
               Cancelar
             </button>

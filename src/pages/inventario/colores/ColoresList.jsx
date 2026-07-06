@@ -79,7 +79,7 @@ export default function ColoresList() {
           <Palette size={20} className="text-blue-600" />
           Colores de Vehículos
         </h1>
-        <button
+        <button type="button"
           onClick={() => navigate('/inventario/colores/nuevo')}
           className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg px-4 py-2"
         >
@@ -88,16 +88,16 @@ export default function ColoresList() {
         </button>
       </div>
 
-      <div className="bg-white border border-slate-200 rounded-xl p-4 mb-4">
+      <div className="bg-white border border-slate-400 rounded-xl p-4 mb-4">
         <h3 className="text-sm font-semibold text-slate-700 mb-3">Filtros</h3>
         <form onSubmit={handleFiltrar} className="flex flex-wrap items-end gap-3">
           <div className="flex-1 min-w-[240px]">
-            <label className="text-xs font-medium text-slate-500 mb-1 block">Búsqueda</label>
+            <label className="text-xs font-medium text-slate-700 mb-1 block">Búsqueda</label>
             <input
               value={busquedaInput}
               onChange={(e) => setBusquedaInput(e.target.value)}
               placeholder="Nombre"
-              className="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <button
@@ -124,10 +124,10 @@ export default function ColoresList() {
         </div>
       )}
 
-      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
+      <div className="bg-white border border-slate-400 rounded-xl overflow-hidden">
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-slate-50 text-left text-xs font-semibold text-slate-500 uppercase">
+            <tr className="bg-slate-50 text-left text-xs font-semibold text-slate-700 uppercase">
               <th className="px-4 py-3">Color</th>
               <th className="px-4 py-3">Nombre</th>
               <th className="px-4 py-3">Código Hex</th>
@@ -138,14 +138,14 @@ export default function ColoresList() {
           <tbody className="divide-y divide-slate-100">
             {cargando && (
               <tr>
-                <td colSpan={5} className="px-4 py-8 text-center text-slate-400">
+                <td colSpan={5} className="px-4 py-8 text-center text-slate-600">
                   Cargando...
                 </td>
               </tr>
             )}
             {!cargando && colores.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-4 py-8 text-center text-slate-400">
+                <td colSpan={5} className="px-4 py-8 text-center text-slate-600">
                   No se encontraron colores.
                 </td>
               </tr>
@@ -155,23 +155,23 @@ export default function ColoresList() {
                 <tr key={color.id} className="hover:bg-slate-50">
                   <td className="px-4 py-3">
                     <div
-                      className="w-7 h-7 rounded border border-slate-200"
+                      className="w-7 h-7 rounded border border-slate-400"
                       style={{ backgroundColor: color.codigo_hex }}
                     />
                   </td>
                   <td className="px-4 py-3 font-medium text-slate-800">{color.nombre}</td>
-                  <td className="px-4 py-3 text-slate-500 font-mono text-xs">{color.codigo_hex}</td>
-                  <td className="px-4 py-3 text-slate-500">{color.codigo_fabrica || '-'}</td>
+                  <td className="px-4 py-3 text-slate-700 font-mono text-xs">{color.codigo_hex}</td>
+                  <td className="px-4 py-3 text-slate-700">{color.codigo_fabrica || '-'}</td>
                   <td className="px-4 py-3">
-                    <div className="flex items-center gap-2 text-slate-400">
-                      <button
+                    <div className="flex items-center gap-2 text-slate-600">
+                      <button type="button"
                         onClick={() => navigate(`/inventario/colores/${color.id}/editar`)}
                         className="hover:text-amber-600"
                         title="Editar"
                       >
                         <Pencil size={16} />
                       </button>
-                      <button
+                      <button type="button"
                         onClick={() => setColorAEliminar(color)}
                         className="hover:text-red-600"
                         title="Eliminar"

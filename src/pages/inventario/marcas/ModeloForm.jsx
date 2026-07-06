@@ -102,7 +102,7 @@ export default function ModeloForm() {
   }
 
   if (cargando) {
-    return <div className="text-sm text-slate-400 py-10 text-center">Cargando...</div>
+    return <div className="text-sm text-slate-600 py-10 text-center">Cargando...</div>
   }
 
   return (
@@ -111,16 +111,16 @@ export default function ModeloForm() {
         <h1 className="text-xl font-bold text-slate-800">
           {esEdicion ? 'Editar Modelo' : 'Crear Nuevo Modelo'}
         </h1>
-        <button
+        <button type="button"
           onClick={() => navigate(marcaId ? `/inventario/marcas-modelos/${marcaId}` : '/inventario/marcas-modelos')}
-          className="flex items-center gap-1.5 text-sm font-medium text-slate-600 border border-slate-200 rounded-lg px-3 py-1.5 hover:bg-slate-50"
+          className="flex items-center gap-1.5 text-sm font-medium text-slate-600 border border-slate-400 rounded-lg px-3 py-1.5 hover:bg-slate-50"
         >
           <ArrowLeft size={15} />
           Volver
         </button>
       </div>
 
-      <div className="bg-white border border-slate-200 rounded-xl p-6 max-w-xl">
+      <div className="bg-white border border-slate-400 rounded-xl p-6 max-w-xl">
         {error && (
           <div className="mb-4 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
             {error}
@@ -133,7 +133,7 @@ export default function ModeloForm() {
             <input
               disabled
               value={nombreMarca}
-              className="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 bg-slate-50 text-slate-500"
+              className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 bg-slate-50 text-slate-700"
             />
           </div>
 
@@ -146,7 +146,7 @@ export default function ModeloForm() {
               value={form.nombre}
               onChange={(e) => setForm({ ...form, nombre: e.target.value })}
               placeholder="Ej: Corolla, Focus, Civic"
-              className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -156,7 +156,7 @@ export default function ModeloForm() {
               value={form.version}
               onChange={(e) => setForm({ ...form, version: e.target.value })}
               placeholder="Ej: XEI 1.8, SE Plus, LX"
-              className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -167,7 +167,7 @@ export default function ModeloForm() {
               value={form.anio}
               onChange={(e) => setForm({ ...form, anio: e.target.value })}
               placeholder="Ej: 2024"
-              className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -177,7 +177,7 @@ export default function ModeloForm() {
               <select
                 value={form.moneda_id}
                 onChange={(e) => setForm({ ...form, moneda_id: e.target.value })}
-                className="text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-32"
+                className="text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-32"
               >
                 <option value="">Moneda</option>
                 {monedas.map((m) => (
@@ -193,7 +193,7 @@ export default function ModeloForm() {
                 value={form.precio_lista}
                 onChange={(e) => setForm({ ...form, precio_lista: e.target.value })}
                 placeholder="0.00"
-                className="flex-1 text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="flex-1 text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
           </div>
@@ -205,7 +205,7 @@ export default function ModeloForm() {
               onChange={(e) => setForm({ ...form, descripcion: e.target.value })}
               rows={3}
               placeholder="Descripción detallada del modelo, características principales, etc."
-              className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -215,11 +215,11 @@ export default function ModeloForm() {
                 type="checkbox"
                 checked={form.activo}
                 onChange={(e) => setForm({ ...form, activo: e.target.checked })}
-                className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                className="rounded border-slate-400 text-blue-600 focus:ring-blue-500"
               />
               Modelo activo
             </label>
-            <p className="text-xs text-slate-400 mt-1 ml-6">
+            <p className="text-xs text-slate-600 mt-1 ml-6">
               Los modelos activos aparecerán disponibles para crear vehículos
             </p>
           </div>
@@ -228,7 +228,7 @@ export default function ModeloForm() {
             <button
               type="button"
               onClick={() => navigate(marcaId ? `/inventario/marcas-modelos/${marcaId}` : '/inventario/marcas-modelos')}
-              className="px-4 py-2 text-sm rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50"
+              className="px-4 py-2 text-sm rounded-lg border border-slate-400 text-slate-600 hover:bg-slate-50"
             >
               Cancelar
             </button>

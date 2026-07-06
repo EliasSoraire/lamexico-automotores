@@ -26,12 +26,12 @@ export default function Topbar() {
   const inicial = usuario?.nombre_completo?.charAt(0)?.toUpperCase() || 'U'
 
   return (
-    <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 shrink-0">
-      <div className="text-sm text-slate-500">
-        <span className="text-slate-400">Dashboard</span>
+    <header className="h-16 bg-white border-b border-slate-400 flex items-center justify-between px-6 shrink-0">
+      <div className="text-sm text-slate-700">
+        <span className="text-slate-600">Dashboard</span>
         {nombrePantalla && nombrePantalla !== 'Dashboard' && (
           <>
-            <span className="mx-1.5 text-slate-300">/</span>
+            <span className="mx-1.5 text-slate-700">/</span>
             <span className="text-slate-700 font-medium">{nombrePantalla}</span>
           </>
         )}
@@ -39,11 +39,11 @@ export default function Topbar() {
 
       <div className="flex items-center gap-4">
         <div className="hidden sm:flex items-center gap-1.5 text-sm text-slate-600">
-          <Building2 size={16} className="text-slate-400" />
+          <Building2 size={16} className="text-slate-600" />
           La México Automotores
         </div>
 
-        <button className="relative text-slate-400 hover:text-slate-600">
+        <button type="button" className="relative text-slate-600 hover:text-slate-600">
           <Bell size={19} />
           <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[10px] leading-none rounded-full w-4 h-4 flex items-center justify-center">
             0
@@ -51,7 +51,7 @@ export default function Topbar() {
         </button>
 
         <div className="relative">
-          <button
+          <button type="button"
             onClick={() => setMenuAbierto(!menuAbierto)}
             className="flex items-center gap-2"
           >
@@ -61,7 +61,7 @@ export default function Topbar() {
             <span className="hidden sm:block text-sm text-slate-700 font-medium">
               {usuario?.nombre_completo}
             </span>
-            <ChevronDown size={15} className="text-slate-400" />
+            <ChevronDown size={15} className="text-slate-600" />
           </button>
 
           {menuAbierto && (
@@ -70,8 +70,8 @@ export default function Topbar() {
                 className="fixed inset-0 z-10"
                 onClick={() => setMenuAbierto(false)}
               />
-              <div className="absolute right-0 mt-2 w-44 bg-white border border-slate-200 rounded-lg shadow-lg z-20 py-1">
-                <button
+              <div className="absolute right-0 mt-2 w-44 bg-white border border-slate-400 rounded-lg shadow-lg z-20 py-1">
+                <button type="button"
                   onClick={logout}
                   className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50"
                 >

@@ -65,7 +65,7 @@ export default function ColorForm() {
   const hexPreview = HEX_VALIDO.test(form.codigo_hex) ? form.codigo_hex : '#cccccc'
 
   if (cargando) {
-    return <div className="text-sm text-slate-400 py-10 text-center">Cargando...</div>
+    return <div className="text-sm text-slate-600 py-10 text-center">Cargando...</div>
   }
 
   return (
@@ -74,16 +74,16 @@ export default function ColorForm() {
         <h1 className="text-xl font-bold text-slate-800">
           {esEdicion ? 'Editar Color de Vehículo' : 'Nuevo Color de Vehículo'}
         </h1>
-        <button
+        <button type="button"
           onClick={() => navigate('/inventario/colores')}
-          className="flex items-center gap-1.5 text-sm font-medium text-slate-600 border border-slate-200 rounded-lg px-3 py-1.5 hover:bg-slate-50"
+          className="flex items-center gap-1.5 text-sm font-medium text-slate-600 border border-slate-400 rounded-lg px-3 py-1.5 hover:bg-slate-50"
         >
           <ArrowLeft size={15} />
           Volver
         </button>
       </div>
 
-      <div className="bg-white border border-slate-200 rounded-xl p-6 max-w-xl">
+      <div className="bg-white border border-slate-400 rounded-xl p-6 max-w-xl">
         {error && (
           <div className="mb-4 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
             {error}
@@ -91,10 +91,10 @@ export default function ColorForm() {
         )}
 
         <div className="mb-6">
-          <p className="text-xs font-semibold text-slate-400 uppercase mb-2 text-center">Vista Previa</p>
+          <p className="text-xs font-semibold text-slate-600 uppercase mb-2 text-center">Vista Previa</p>
           <div className="flex justify-center bg-slate-50 rounded-lg py-6">
             <div
-              className="w-14 h-14 rounded-md border border-slate-300"
+              className="w-14 h-14 rounded-md border border-slate-400"
               style={{ backgroundColor: hexPreview }}
             />
           </div>
@@ -109,7 +109,7 @@ export default function ColorForm() {
               required
               value={form.nombre}
               onChange={(e) => setForm({ ...form, nombre: e.target.value })}
-              className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -122,14 +122,14 @@ export default function ColorForm() {
                 type="color"
                 value={hexPreview}
                 onChange={(e) => setForm({ ...form, codigo_hex: e.target.value.toUpperCase() })}
-                className="w-10 h-10 rounded border border-slate-300 cursor-pointer"
+                className="w-10 h-10 rounded border border-slate-400 cursor-pointer"
               />
               <input
                 required
                 value={form.codigo_hex}
                 onChange={(e) => setForm({ ...form, codigo_hex: e.target.value })}
                 placeholder="#000000"
-                className="flex-1 text-sm border border-slate-300 rounded-lg px-3 py-2 font-mono focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="flex-1 text-sm border border-slate-400 rounded-lg px-3 py-2 font-mono focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
           </div>
@@ -142,7 +142,7 @@ export default function ColorForm() {
               value={form.codigo_fabrica}
               onChange={(e) => setForm({ ...form, codigo_fabrica: e.target.value })}
               placeholder="Ej: WH-001"
-              className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -150,7 +150,7 @@ export default function ColorForm() {
             <button
               type="button"
               onClick={() => navigate('/inventario/colores')}
-              className="px-4 py-2 text-sm rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50"
+              className="px-4 py-2 text-sm rounded-lg border border-slate-400 text-slate-600 hover:bg-slate-50"
             >
               Cancelar
             </button>

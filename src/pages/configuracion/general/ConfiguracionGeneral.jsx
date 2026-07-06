@@ -78,7 +78,7 @@ export default function ConfiguracionGeneral() {
     }
   }
 
-  if (cargando) return <div className="text-sm text-slate-400 py-10 text-center">Cargando...</div>
+  if (cargando) return <div className="text-sm text-slate-600 py-10 text-center">Cargando...</div>
 
   return (
     <div className="pb-20">
@@ -92,17 +92,17 @@ export default function ConfiguracionGeneral() {
 
       <div className="space-y-4 max-w-3xl">
         {/* Identidad Visual */}
-        <div className="bg-white border border-slate-200 rounded-xl p-6">
+        <div className="bg-white border border-slate-400 rounded-xl p-6">
           <h3 className="font-semibold text-slate-800 mb-1">Identidad Visual</h3>
-          <p className="text-sm text-slate-500 mb-4">Logo principal del sistema y comprobantes.</p>
+          <p className="text-sm text-slate-700 mb-4">Logo principal del sistema y comprobantes.</p>
 
           <label className="text-sm font-medium text-slate-700 mb-2 block">Logo (PNG, JPG, SVG máx. 5MB)</label>
           <div className="flex items-center gap-3">
-            <div className="w-20 h-20 rounded-lg border border-slate-200 bg-slate-50 flex items-center justify-center overflow-hidden">
+            <div className="w-20 h-20 rounded-lg border border-slate-400 bg-slate-50 flex items-center justify-center overflow-hidden">
               {form.logo_url ? (
                 <img src={form.logo_url} alt="Logo" className="w-full h-full object-contain" />
               ) : (
-                <span className="text-xs text-slate-400 text-center px-1">Sin logo</span>
+                <span className="text-xs text-slate-600 text-center px-1">Sin logo</span>
               )}
             </div>
             <button
@@ -113,7 +113,7 @@ export default function ConfiguracionGeneral() {
             >
               {subiendoLogo ? 'Subiendo...' : 'Seleccionar archivo'}
             </button>
-            <span className="text-sm text-slate-400">Ningún archivo seleccionado</span>
+            <span className="text-sm text-slate-600">Ningún archivo seleccionado</span>
             <input
               ref={inputLogoRef}
               type="file"
@@ -125,9 +125,9 @@ export default function ConfiguracionGeneral() {
         </div>
 
         {/* Privacidad y visibilidad de consultas */}
-        <div className="bg-white border border-slate-200 rounded-xl p-6">
+        <div className="bg-white border border-slate-400 rounded-xl p-6">
           <h3 className="font-semibold text-slate-800 mb-1">Privacidad y visibilidad de consultas</h3>
-          <p className="text-sm text-slate-500 mb-4">Controla si los vendedores solo ven las consultas donde figuran como vendedor asignado.</p>
+          <p className="text-sm text-slate-700 mb-4">Controla si los vendedores solo ven las consultas donde figuran como vendedor asignado.</p>
 
           <div className="flex items-start gap-2 bg-blue-50 border border-blue-100 rounded-lg px-4 py-3 mb-4">
             <Info size={16} className="text-blue-500 mt-0.5 shrink-0" />
@@ -143,11 +143,11 @@ export default function ConfiguracionGeneral() {
               type="checkbox"
               checked={form.restringir_por_vendedor}
               onChange={(e) => setForm({ ...form, restringir_por_vendedor: e.target.checked })}
-              className="mt-0.5 rounded border-slate-300 text-blue-600"
+              className="mt-0.5 rounded border-slate-400 text-blue-600"
             />
             <span>
               <span className="text-sm font-medium text-slate-700 block">Restringir por vendedor asignado</span>
-              <span className="text-xs text-slate-400">
+              <span className="text-xs text-slate-600">
                 Activar esta opción limitará la visibilidad de consultas para usuarios con rol Vendedor.
               </span>
             </span>
@@ -155,9 +155,9 @@ export default function ConfiguracionGeneral() {
         </div>
 
         {/* Restricciones de Inventario */}
-        <div className="bg-white border border-slate-200 rounded-xl p-6">
+        <div className="bg-white border border-slate-400 rounded-xl p-6">
           <h3 className="font-semibold text-slate-800 mb-1">Restricciones de Inventario (Solo Propios)</h3>
-          <p className="text-sm text-slate-500 mb-4">Límites de antigüedad y kilometraje permitidos para ingresar un vehículo.</p>
+          <p className="text-sm text-slate-700 mb-4">Límites de antigüedad y kilometraje permitidos para ingresar un vehículo.</p>
 
           <div className="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-lg px-4 py-3 mb-4">
             <AlertTriangle size={16} className="text-amber-500 mt-0.5 shrink-0" />
@@ -175,9 +175,9 @@ export default function ConfiguracionGeneral() {
                 value={form.antiguedad_maxima_anios}
                 onChange={(e) => setForm({ ...form, antiguedad_maxima_anios: e.target.value })}
                 placeholder="ej. 10"
-                className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <p className="text-xs text-slate-400 mt-1">Años máximos desde el año del modelo respecto al año actual. Dejar vacío para sin límite.</p>
+              <p className="text-xs text-slate-600 mt-1">Años máximos desde el año del modelo respecto al año actual. Dejar vacío para sin límite.</p>
             </div>
             <div>
               <label className="text-sm font-medium text-slate-700 mb-1 block">Kilometraje Máximo Permitido</label>
@@ -186,17 +186,17 @@ export default function ConfiguracionGeneral() {
                 value={form.kilometraje_maximo}
                 onChange={(e) => setForm({ ...form, kilometraje_maximo: e.target.value })}
                 placeholder="ej. 200000"
-                className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <p className="text-xs text-slate-400 mt-1">Kilometraje máximo aceptado. Dejar vacío para sin límite.</p>
+              <p className="text-xs text-slate-600 mt-1">Kilometraje máximo aceptado. Dejar vacío para sin límite.</p>
             </div>
           </div>
         </div>
 
         {/* Reglas Comerciales */}
-        <div className="bg-white border border-slate-200 rounded-xl p-6">
+        <div className="bg-white border border-slate-400 rounded-xl p-6">
           <h3 className="font-semibold text-slate-800 mb-1">Reglas Comerciales</h3>
-          <p className="text-sm text-slate-500 mb-4">Rendimiento esperado, plazos de operaciones y moneda por defecto en formularios.</p>
+          <p className="text-sm text-slate-700 mb-4">Rendimiento esperado, plazos de operaciones y moneda por defecto en formularios.</p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
             <div>
@@ -206,9 +206,9 @@ export default function ConfiguracionGeneral() {
                 value={form.margen_ganancia_sugerido}
                 onChange={(e) => setForm({ ...form, margen_ganancia_sugerido: e.target.value })}
                 placeholder="ej. 20"
-                className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <p className="text-xs text-slate-400 mt-1">Se usará para sugerir el precio de venta al cargar un vehículo propio al inventario.</p>
+              <p className="text-xs text-slate-600 mt-1">Se usará para sugerir el precio de venta al cargar un vehículo propio al inventario.</p>
             </div>
             <div>
               <label className="text-sm font-medium text-slate-700 mb-1 block">Días de Vigencia de Reservas</label>
@@ -217,9 +217,9 @@ export default function ConfiguracionGeneral() {
                 value={form.dias_vigencia_reservas}
                 onChange={(e) => setForm({ ...form, dias_vigencia_reservas: e.target.value })}
                 placeholder="ej. 3"
-                className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <p className="text-xs text-slate-400 mt-1">Días desde la fecha de reserva hasta el vencimiento. Genera notificaciones preventivas.</p>
+              <p className="text-xs text-slate-600 mt-1">Días desde la fecha de reserva hasta el vencimiento. Genera notificaciones preventivas.</p>
             </div>
           </div>
 
@@ -228,14 +228,14 @@ export default function ConfiguracionGeneral() {
             <select
               value={form.moneda_default_id}
               onChange={(e) => setForm({ ...form, moneda_default_id: e.target.value })}
-              className="w-full sm:w-1/2 text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full sm:w-1/2 text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">— Seleccionar —</option>
               {monedas.map((m) => (
                 <option key={m.id} value={m.id}>{m.simbolo} - {m.nombre} ({m.codigo})</option>
               ))}
             </select>
-            <p className="text-xs text-slate-400 mt-1">Moneda a preseleccionar en formularios de ventas, pagos e ingresos de inventario.</p>
+            <p className="text-xs text-slate-600 mt-1">Moneda a preseleccionar en formularios de ventas, pagos e ingresos de inventario.</p>
           </div>
         </div>
       </div>
@@ -244,7 +244,7 @@ export default function ConfiguracionGeneral() {
         {guardadoOk && (
           <span className="mr-3 text-sm text-green-600 font-medium">Guardado ✓</span>
         )}
-        <button
+        <button type="button"
           onClick={guardar}
           disabled={guardando}
           className="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 disabled:bg-slate-400 text-white text-sm font-medium rounded-lg px-5 py-3 shadow-lg"

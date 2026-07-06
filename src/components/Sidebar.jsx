@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import {
   LayoutDashboard, Warehouse, ShoppingCart, DollarSign, Package,
@@ -24,6 +24,11 @@ export default function Sidebar({ colapsado, onToggleColapsado }) {
 
   const [grupoAbierto, setGrupoAbierto] = useState(grupoActivoInicial)
 
+  // Al navegar a cualquier pantalla, se limpia el buscador y vuelve al sidebar normal
+  useEffect(() => {
+    setBusqueda('')
+  }, [location.pathname])
+
   const menuFiltrado = useMemo(() => {
     if (!busqueda.trim()) return menuConfig
 
@@ -48,7 +53,7 @@ export default function Sidebar({ colapsado, onToggleColapsado }) {
 
   return (
     <aside
-      className={`h-screen sticky top-0 bg-white border-r border-slate-200 flex flex-col transition-all ${
+      className={`h-screen sticky top-0 bg-white border-r border-slate-400 flex flex-col transition-all ${
         colapsado ? 'w-16' : 'w-64'
       }`}
     >
@@ -58,9 +63,9 @@ export default function Sidebar({ colapsado, onToggleColapsado }) {
             La Mexico<br />Automotores
           </span>
         )}
-        <button
+        <button type="button"
           onClick={onToggleColapsado}
-          className="text-slate-400 hover:text-slate-600 p-1"
+          className="text-slate-600 hover:text-slate-600 p-1"
           title={colapsado ? 'Expandir menú' : 'Colapsar menú'}
         >
           <ChevronLeft size={18} className={`transition-transform ${colapsado ? 'rotate-180' : ''}`} />
@@ -70,12 +75,12 @@ export default function Sidebar({ colapsado, onToggleColapsado }) {
       {!colapsado && (
         <div className="px-3 pt-3">
           <div className="relative">
-            <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400" />
+            <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-600" />
             <input
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
               placeholder="Buscar..."
-              className="w-full text-sm bg-slate-50 border border-slate-200 rounded-lg pl-8 pr-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-sm bg-slate-50 border border-slate-400 rounded-lg pl-8 pr-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
         </div>
@@ -108,7 +113,7 @@ export default function Sidebar({ colapsado, onToggleColapsado }) {
 
           return (
             <div key={entrada.nombre}>
-              <button
+              <button type="button"
                 onClick={() => toggleGrupo(entrada.nombre)}
                 className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                   grupoContieneActivo ? 'text-blue-600' : 'text-slate-600 hover:bg-slate-50'
@@ -136,13 +141,13 @@ export default function Sidebar({ colapsado, onToggleColapsado }) {
                         `flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors ${
                           isActive
                             ? 'bg-blue-50 text-blue-600 font-medium'
-                            : 'text-slate-500 hover:bg-slate-50'
+                            : 'text-slate-700 hover:bg-slate-50'
                         }`
                       }
                     >
                       {it.nombre}
                       {it.proximamente && (
-                        <Clock size={12} className="text-slate-300 shrink-0" />
+                        <Clock size={12} className="text-slate-700 shrink-0" />
                       )}
                     </NavLink>
                   ))}

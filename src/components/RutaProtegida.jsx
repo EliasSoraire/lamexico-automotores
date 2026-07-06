@@ -6,7 +6,7 @@ export default function RutaProtegida({ children }) {
 
   if (cargando) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-slate-500 text-sm">
+      <div className="min-h-screen flex items-center justify-center text-slate-700 text-sm">
         Cargando...
       </div>
     )

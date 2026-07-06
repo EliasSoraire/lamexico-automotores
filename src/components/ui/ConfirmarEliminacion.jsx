@@ -12,7 +12,7 @@ export default function ConfirmarEliminacion({ abierto, nombre, onCancelar, onCo
           </div>
           <div>
             <h3 className="font-semibold text-slate-800">Eliminar {nombre ? `"${nombre}"` : ''}</h3>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-slate-700 mt-1">
               ¿Estás seguro de que deseas eliminar? Esta acción no se puede deshacer.
             </p>
           </div>
@@ -25,14 +25,14 @@ export default function ConfirmarEliminacion({ abierto, nombre, onCancelar, onCo
         )}
 
         <div className="flex justify-end gap-2">
-          <button
+          <button type="button"
             onClick={onCancelar}
             disabled={cargando}
-            className="px-4 py-2 text-sm rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50"
+            className="px-4 py-2 text-sm rounded-lg border border-slate-400 text-slate-600 hover:bg-slate-50"
           >
             Cancelar
           </button>
-          <button
+          <button type="button"
             onClick={onConfirmar}
             disabled={cargando}
             className="px-4 py-2 text-sm rounded-lg bg-red-600 hover:bg-red-700 disabled:bg-red-300 text-white font-medium"

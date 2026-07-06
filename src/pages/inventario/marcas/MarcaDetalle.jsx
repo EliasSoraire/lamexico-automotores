@@ -92,7 +92,7 @@ export default function MarcaDetalle() {
   }
 
   if (cargando) {
-    return <div className="text-sm text-slate-400 py-10 text-center">Cargando...</div>
+    return <div className="text-sm text-slate-600 py-10 text-center">Cargando...</div>
   }
 
   if (error && !marca) {
@@ -104,16 +104,16 @@ export default function MarcaDetalle() {
       <div className="flex items-center justify-between mb-5">
         <h1 className="text-xl font-bold text-slate-800">Detalles de Marca: {marca.nombre}</h1>
         <div className="flex gap-2">
-          <button
+          <button type="button"
             onClick={() => navigate(`/inventario/marcas-modelos/${id}/editar`)}
             className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg px-3 py-1.5"
           >
             <Pencil size={14} />
             Editar
           </button>
-          <button
+          <button type="button"
             onClick={() => navigate('/inventario/marcas-modelos')}
-            className="flex items-center gap-1.5 text-sm font-medium text-slate-600 border border-slate-200 rounded-lg px-3 py-1.5 hover:bg-slate-50"
+            className="flex items-center gap-1.5 text-sm font-medium text-slate-600 border border-slate-400 rounded-lg px-3 py-1.5 hover:bg-slate-50"
           >
             <ArrowLeft size={14} />
             Volver
@@ -121,7 +121,7 @@ export default function MarcaDetalle() {
         </div>
       </div>
 
-      <div className="bg-white border border-slate-200 rounded-xl p-6 grid grid-cols-1 sm:grid-cols-2 gap-6 mb-4">
+      <div className="bg-white border border-slate-400 rounded-xl p-6 grid grid-cols-1 sm:grid-cols-2 gap-6 mb-4">
         <div>
           <h3 className="text-sm font-semibold text-slate-800 mb-3">Información Básica</h3>
           <dl className="space-y-2.5 text-sm">
@@ -138,7 +138,7 @@ export default function MarcaDetalle() {
               <dd>
                 <span
                   className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-                    marca.activa ? 'bg-green-50 text-green-700' : 'bg-slate-100 text-slate-500'
+                    marca.activa ? 'bg-green-50 text-green-700' : 'bg-slate-100 text-slate-700'
                   }`}
                 >
                   {marca.activa ? 'Activa' : 'Inactiva'}
@@ -158,7 +158,7 @@ export default function MarcaDetalle() {
         <div>
           <h3 className="text-sm font-semibold text-slate-800 mb-3">Detalles Adicionales</h3>
           <dt className="text-blue-600 text-xs font-medium">Descripción</dt>
-          <dd className="text-sm text-slate-500 mt-1">{marca.descripcion || 'Sin descripción'}</dd>
+          <dd className="text-sm text-slate-700 mt-1">{marca.descripcion || 'Sin descripción'}</dd>
         </div>
       </div>
 
@@ -192,10 +192,10 @@ export default function MarcaDetalle() {
         </div>
       </div>
 
-      <div className="bg-white border border-slate-200 rounded-xl p-5">
+      <div className="bg-white border border-slate-400 rounded-xl p-5">
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-semibold text-slate-800">Modelos de {marca.nombre}</h3>
-          <button
+          <button type="button"
             onClick={() => navigate(`/inventario/marcas-modelos/modelos/nuevo?marca_id=${id}`)}
             className="flex items-center gap-1.5 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg px-3 py-1.5"
           >
@@ -206,26 +206,26 @@ export default function MarcaDetalle() {
 
         <form onSubmit={handleBuscar} className="flex flex-wrap items-end gap-3 mb-4">
           <div className="flex-1 min-w-[220px]">
-            <label className="text-xs font-medium text-slate-500 mb-1 block">Buscar Modelo</label>
+            <label className="text-xs font-medium text-slate-700 mb-1 block">Buscar Modelo</label>
             <div className="relative">
-              <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400" />
+              <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-600" />
               <input
                 value={busquedaInput}
                 onChange={(e) => setBusquedaInput(e.target.value)}
                 placeholder="Buscar por nombre de modelo..."
-                className="w-full text-sm border border-slate-200 rounded-lg pl-8 pr-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full text-sm border border-slate-400 rounded-lg pl-8 pr-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
           </div>
           <div>
-            <label className="text-xs font-medium text-slate-500 mb-1 block">Estado</label>
+            <label className="text-xs font-medium text-slate-700 mb-1 block">Estado</label>
             <select
               value={estadoModelo}
               onChange={(e) => {
                 setEstadoModelo(e.target.value)
                 setPage(1)
               }}
-              className="text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="activos">Solo activos</option>
               <option value="inactivos">Solo inactivos</option>
@@ -243,7 +243,7 @@ export default function MarcaDetalle() {
 
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-slate-50 text-left text-xs font-semibold text-slate-500 uppercase">
+            <tr className="bg-slate-50 text-left text-xs font-semibold text-slate-700 uppercase">
               <th className="px-3 py-2.5">Modelo</th>
               <th className="px-3 py-2.5">Versión</th>
               <th className="px-3 py-2.5">Precio Lista</th>
@@ -255,14 +255,14 @@ export default function MarcaDetalle() {
           <tbody className="divide-y divide-slate-100">
             {cargandoModelos && (
               <tr>
-                <td colSpan={6} className="px-3 py-6 text-center text-slate-400">
+                <td colSpan={6} className="px-3 py-6 text-center text-slate-600">
                   Cargando...
                 </td>
               </tr>
             )}
             {!cargandoModelos && modelos.length === 0 && (
               <tr>
-                <td colSpan={6} className="px-3 py-6 text-center text-slate-400">
+                <td colSpan={6} className="px-3 py-6 text-center text-slate-600">
                   Esta marca todavía no tiene modelos cargados.
                 </td>
               </tr>
@@ -271,24 +271,24 @@ export default function MarcaDetalle() {
               modelos.map((modelo) => (
                 <tr key={modelo.id} className="hover:bg-slate-50">
                   <td className="px-3 py-2.5 font-medium text-slate-700">{modelo.nombre}</td>
-                  <td className="px-3 py-2.5 text-slate-500">{modelo.version || '-'}</td>
-                  <td className="px-3 py-2.5 text-slate-500">
+                  <td className="px-3 py-2.5 text-slate-700">{modelo.version || '-'}</td>
+                  <td className="px-3 py-2.5 text-slate-700">
                     {modelo.precio_lista
                       ? `${modelo.simbolo_moneda || ''}${Number(modelo.precio_lista).toLocaleString('es-AR', { minimumFractionDigits: 2 })}`
                       : '-'}
                   </td>
-                  <td className="px-3 py-2.5 text-slate-500">{modelo.cantidad_vehiculos}</td>
+                  <td className="px-3 py-2.5 text-slate-700">{modelo.cantidad_vehiculos}</td>
                   <td className="px-3 py-2.5">
                     <span
                       className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-                        modelo.activo ? 'bg-green-50 text-green-700' : 'bg-slate-100 text-slate-500'
+                        modelo.activo ? 'bg-green-50 text-green-700' : 'bg-slate-100 text-slate-700'
                       }`}
                     >
                       {modelo.activo ? 'Activo' : 'Inactivo'}
                     </span>
                   </td>
                   <td className="px-3 py-2.5">
-                    <div className="flex items-center gap-2 text-slate-400">
+                    <div className="flex items-center gap-2 text-slate-600">
                       <Link
                         to={`/inventario/marcas-modelos/modelos/${modelo.id}/editar`}
                         className="hover:text-amber-600"
@@ -296,7 +296,7 @@ export default function MarcaDetalle() {
                       >
                         <Pencil size={15} />
                       </Link>
-                      <button
+                      <button type="button"
                         onClick={() => setModeloAEliminar(modelo)}
                         className="hover:text-red-600"
                         title="Eliminar"
@@ -336,9 +336,9 @@ export default function MarcaDetalle() {
 
 function TarjetaStat({ icono, bg, label, valor }) {
   return (
-    <div className="bg-white border border-slate-200 rounded-xl p-4">
+    <div className="bg-white border border-slate-400 rounded-xl p-4">
       <div className={`w-9 h-9 rounded-lg ${bg} flex items-center justify-center mb-2`}>{icono}</div>
-      <p className="text-xs text-slate-500">{label}</p>
+      <p className="text-xs text-slate-700">{label}</p>
       <p className="text-xl font-bold text-slate-800">{valor}</p>
     </div>
   )

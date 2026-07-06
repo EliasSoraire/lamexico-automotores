@@ -15,3 +15,20 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: #f8fafc;
 }
+
+/* Contraste: el texto que se escribe en inputs/selects/textareas tiene que
+   leerse bien sin tener que acercarse a la pantalla. */
+input,
+select,
+textarea {
+  color: #1e293b; /* slate-800 */
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #94a3b8; /* slate-400, se distingue del texto real sin perderse */
+}
+
+label {
+  color: #334155; /* slate-700 */
+}

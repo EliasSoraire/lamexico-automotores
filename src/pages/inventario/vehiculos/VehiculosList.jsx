@@ -100,7 +100,7 @@ export default function VehiculosList() {
           <Car size={20} className="text-blue-600" />
           Gestión de Vehículos
         </h1>
-        <button
+        <button type="button"
           onClick={() => navigate('/inventario/vehiculos/nuevo')}
           className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg px-4 py-2"
         >
@@ -110,23 +110,23 @@ export default function VehiculosList() {
       </div>
 
       {/* Filtros */}
-      <div className="bg-white border border-slate-200 rounded-xl p-4 mb-4">
+      <div className="bg-white border border-slate-400 rounded-xl p-4 mb-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-3">
           <div>
-            <label className="text-xs font-medium text-slate-500 mb-1 block">Búsqueda</label>
+            <label className="text-xs font-medium text-slate-700 mb-1 block">Búsqueda</label>
             <input
               value={filtros.busqueda}
               onChange={(e) => setFiltros({ ...filtros, busqueda: e.target.value })}
               placeholder="Patente, motor, chasis..."
-              className="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div>
-            <label className="text-xs font-medium text-slate-500 mb-1 block">Estado</label>
+            <label className="text-xs font-medium text-slate-700 mb-1 block">Estado</label>
             <select
               value={filtros.estado}
               onChange={(e) => setFiltros({ ...filtros, estado: e.target.value })}
-              className="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Todos los estados</option>
               {ESTADOS.map((e) => (
@@ -135,11 +135,11 @@ export default function VehiculosList() {
             </select>
           </div>
           <div>
-            <label className="text-xs font-medium text-slate-500 mb-1 block">Condición</label>
+            <label className="text-xs font-medium text-slate-700 mb-1 block">Condición</label>
             <select
               value={filtros.condicion_id}
               onChange={(e) => setFiltros({ ...filtros, condicion_id: e.target.value })}
-              className="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Todas las condiciones</option>
               {condiciones.map((c) => (
@@ -148,11 +148,11 @@ export default function VehiculosList() {
             </select>
           </div>
           <div>
-            <label className="text-xs font-medium text-slate-500 mb-1 block">Titular de Stock</label>
+            <label className="text-xs font-medium text-slate-700 mb-1 block">Titular de Stock</label>
             <select
               value={filtros.titular_stock_id}
               onChange={(e) => setFiltros({ ...filtros, titular_stock_id: e.target.value })}
-              className="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Todos los titulares</option>
               {titulares.map((t) => (
@@ -161,11 +161,11 @@ export default function VehiculosList() {
             </select>
           </div>
           <div>
-            <label className="text-xs font-medium text-slate-500 mb-1 block">Equipo GNC</label>
+            <label className="text-xs font-medium text-slate-700 mb-1 block">Equipo GNC</label>
             <select
               value={filtros.gnc}
               onChange={(e) => setFiltros({ ...filtros, gnc: e.target.value })}
-              className="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Todos</option>
               <option value="true">Con GNC</option>
@@ -173,11 +173,11 @@ export default function VehiculosList() {
             </select>
           </div>
           <div>
-            <label className="text-xs font-medium text-slate-500 mb-1 block">Clasificación</label>
+            <label className="text-xs font-medium text-slate-700 mb-1 block">Clasificación</label>
             <select
               value={filtros.clasificacion_id}
               onChange={(e) => setFiltros({ ...filtros, clasificacion_id: e.target.value })}
-              className="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Todas las clasificaciones</option>
               {clasificaciones.map((c) => (
@@ -187,14 +187,14 @@ export default function VehiculosList() {
           </div>
         </div>
         <div className="flex justify-end gap-2">
-          <button
+          <button type="button"
             onClick={limpiarFiltros}
-            className="flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-700 px-3 py-1.5"
+            className="flex items-center gap-1.5 text-sm text-slate-700 hover:text-slate-700 px-3 py-1.5"
           >
             <X size={14} />
             Limpiar
           </button>
-          <button
+          <button type="button"
             onClick={aplicarFiltros}
             className="bg-slate-700 hover:bg-slate-800 text-white text-sm font-medium rounded-lg px-4 py-1.5"
           >
@@ -218,24 +218,23 @@ export default function VehiculosList() {
         </div>
       )}
 
-      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
+      <div className="bg-white border border-slate-400 rounded-xl overflow-hidden">
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-slate-50 text-left text-xs font-semibold text-slate-500 uppercase">
+            <tr className="bg-slate-50 text-left text-xs font-semibold text-slate-700 uppercase">
               <th className="px-4 py-3">Vehículo</th>
               <th className="px-4 py-3">Estado</th>
               <th className="px-4 py-3">Condición</th>
               <th className="px-4 py-3">Precio</th>
-              <th className="px-4 py-3">Sucursal</th>
               <th className="px-4 py-3">Acciones</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
             {cargando && (
-              <tr><td colSpan={6} className="px-4 py-8 text-center text-slate-400">Cargando...</td></tr>
+              <tr><td colSpan={5} className="px-4 py-8 text-center text-slate-600">Cargando...</td></tr>
             )}
             {!cargando && vehiculos.length === 0 && (
-              <tr><td colSpan={6} className="px-4 py-8 text-center text-slate-400">No se encontraron vehículos.</td></tr>
+              <tr><td colSpan={5} className="px-4 py-8 text-center text-slate-600">No se encontraron vehículos.</td></tr>
             )}
             {!cargando &&
               vehiculos.map((v) => (
@@ -244,10 +243,10 @@ export default function VehiculosList() {
                     <div className="font-medium text-slate-800">
                       {v.marcas?.nombre} {v.modelos?.nombre}
                     </div>
-                    <div className="text-xs text-slate-400">
+                    <div className="text-xs text-slate-600">
                       ID: {v.id} · {v.año_modelo} · {v.colores?.nombre} · {v.kilometraje?.toLocaleString('es-AR')} km
                     </div>
-                    <div className="text-xs text-slate-400">Patente: {v.patente}</div>
+                    <div className="text-xs text-slate-600">Patente: {v.patente}</div>
                   </td>
                   <td className="px-4 py-3">
                     <EstadoBadge estado={v.estado} />
@@ -258,19 +257,18 @@ export default function VehiculosList() {
                       ? `${v.monedas?.simbolo || '$'}${Number(v.precio_venta).toLocaleString('es-AR')}`
                       : '-'}
                   </td>
-                  <td className="px-4 py-3 text-slate-500">{v.sucursales?.nombre || '-'}</td>
                   <td className="px-4 py-3">
-                    <div className="flex items-center gap-2 text-slate-400">
-                      <button onClick={() => navigate(`/inventario/vehiculos/${v.id}`)} className="hover:text-blue-600" title="Ver">
+                    <div className="flex items-center gap-2 text-slate-600">
+                      <button type="button" onClick={() => navigate(`/inventario/vehiculos/${v.id}`)} className="hover:text-blue-600" title="Ver">
                         <Eye size={16} />
                       </button>
-                      <button onClick={() => navigate(`/inventario/vehiculos/${v.id}/editar`)} className="hover:text-amber-600" title="Editar">
+                      <button type="button" onClick={() => navigate(`/inventario/vehiculos/${v.id}/editar`)} className="hover:text-amber-600" title="Editar">
                         <Pencil size={16} />
                       </button>
-                      <button onClick={() => setACambiarEstado(v)} className="hover:text-purple-600" title="Cambiar estado">
+                      <button type="button" onClick={() => setACambiarEstado(v)} className="hover:text-purple-600" title="Cambiar estado">
                         <RefreshCw size={16} />
                       </button>
-                      <button onClick={() => setAEliminar(v)} className="hover:text-red-600" title="Eliminar">
+                      <button type="button" onClick={() => setAEliminar(v)} className="hover:text-red-600" title="Eliminar">
                         <Trash2 size={16} />
                       </button>
                     </div>
@@ -306,10 +304,10 @@ export default function VehiculosList() {
 
 function TarjetaContador({ icono, bg, label, valor }) {
   return (
-    <div className="bg-white border border-slate-200 rounded-xl p-4 flex items-center gap-3">
+    <div className="bg-white border border-slate-400 rounded-xl p-4 flex items-center gap-3">
       <div className={`w-9 h-9 rounded-lg ${bg} flex items-center justify-center shrink-0`}>{icono}</div>
       <div>
-        <p className="text-xs text-slate-500">{label}</p>
+        <p className="text-xs text-slate-700">{label}</p>
         <p className="text-lg font-bold text-slate-800">{valor ?? 0}</p>
       </div>
     </div>
@@ -321,12 +319,12 @@ const ESTADO_COLORES = {
   'En Tránsito': 'bg-blue-50 text-blue-700',
   'Reservado': 'bg-amber-50 text-amber-700',
   'En Preparación': 'bg-orange-50 text-orange-700',
-  'De Baja': 'bg-slate-100 text-slate-500',
+  'De Baja': 'bg-slate-100 text-slate-700',
 }
 
 export function EstadoBadge({ estado }) {
   return (
-    <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${ESTADO_COLORES[estado] || 'bg-slate-100 text-slate-500'}`}>
+    <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${ESTADO_COLORES[estado] || 'bg-slate-100 text-slate-700'}`}>
       {estado}
     </span>
   )

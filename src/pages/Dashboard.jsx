@@ -21,14 +21,14 @@ export default function Dashboard() {
   }, [])
 
   if (error) return <div className="text-sm text-red-600 py-10 text-center">{error}</div>
-  if (!datos) return <div className="text-sm text-slate-400 py-10 text-center">Cargando...</div>
+  if (!datos) return <div className="text-sm text-slate-600 py-10 text-center">Cargando...</div>
 
   const dataEstados = datos.estados_vehiculos.filter((e) => e.cantidad > 0)
 
   return (
     <div>
       <h1 className="text-xl font-bold text-slate-800 mb-1">Dashboard - Panel de Control</h1>
-      <p className="text-sm text-slate-500 mb-6">La México Automotores</p>
+      <p className="text-sm text-slate-700 mb-6">La México Automotores</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <TarjetaKpi icono={<Warehouse size={18} className="text-blue-600" />} label="Vehículos Disponibles" valor={datos.vehiculos_disponibles} link="/inventario/vehiculos" textoLink="Ver todos los vehículos" />
@@ -38,7 +38,7 @@ export default function Dashboard() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
-        <div className="bg-white border border-slate-200 rounded-xl p-5">
+        <div className="bg-white border border-slate-400 rounded-xl p-5">
           <h3 className="text-sm font-semibold text-slate-800 mb-4">Ventas por Mes</h3>
           <ResponsiveContainer width="100%" height={240}>
             <BarChart data={datos.ventas_por_mes}>
@@ -50,10 +50,10 @@ export default function Dashboard() {
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-white border border-slate-200 rounded-xl p-5">
+        <div className="bg-white border border-slate-400 rounded-xl p-5">
           <h3 className="text-sm font-semibold text-slate-800 mb-4">Estado de Vehículos</h3>
           {dataEstados.length === 0 ? (
-            <div className="h-[240px] flex items-center justify-center text-sm text-slate-400">
+            <div className="h-[240px] flex items-center justify-center text-sm text-slate-600">
               Todavía no hay vehículos cargados.
             </div>
           ) : (
@@ -73,16 +73,16 @@ export default function Dashboard() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
-        <div className="bg-white border border-slate-200 rounded-xl p-5">
+        <div className="bg-white border border-slate-400 rounded-xl p-5">
           <h3 className="flex items-center gap-1.5 text-sm font-semibold text-slate-800 mb-4">
-            <Calendar size={15} className="text-slate-500" /> Cuotas por Vencer (7 días)
+            <Calendar size={15} className="text-slate-700" /> Cuotas por Vencer (7 días)
           </h3>
           <div className="flex flex-col items-center justify-center py-4">
             {datos.cuotas_por_vencer === 0 ? (
               <>
                 <CheckCircle2 size={28} className="text-green-500 mb-2" />
                 <p className="font-semibold text-slate-700">Todo al día</p>
-                <p className="text-xs text-slate-400">No hay cuotas por vencer</p>
+                <p className="text-xs text-slate-600">No hay cuotas por vencer</p>
               </>
             ) : (
               <p className="text-2xl font-bold text-amber-600">{datos.cuotas_por_vencer}</p>
@@ -90,42 +90,42 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="bg-white border border-slate-200 rounded-xl p-5">
+        <div className="bg-white border border-slate-400 rounded-xl p-5">
           <h3 className="flex items-center gap-1.5 text-sm font-semibold text-slate-800 mb-4">
-            <FileText size={15} className="text-slate-500" /> Resumen de Gestoría
+            <FileText size={15} className="text-slate-700" /> Resumen de Gestoría
           </h3>
           <div className="flex justify-around text-center py-2">
             <div>
               <p className="text-2xl font-bold text-purple-600">{datos.resumen_gestoria.activos}</p>
-              <p className="text-xs text-slate-500">Legajos Activos</p>
+              <p className="text-xs text-slate-700">Legajos Activos</p>
             </div>
             <div>
               <p className="text-2xl font-bold text-amber-600">{datos.resumen_gestoria.requieren_atencion}</p>
-              <p className="text-xs text-slate-500">Requieren Atención</p>
+              <p className="text-xs text-slate-700">Requieren Atención</p>
             </div>
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div className="bg-white border border-slate-200 rounded-xl p-5">
+        <div className="bg-white border border-slate-400 rounded-xl p-5">
           <h3 className="flex items-center gap-1.5 text-sm font-semibold text-slate-800 mb-4">
             <DollarSign size={15} className="text-green-600" /> Resumen Financiero
           </h3>
           <dl className="space-y-2 text-sm">
-            <div className="flex justify-between"><dt className="text-slate-500">Ingresos del Mes</dt><dd className="text-green-600 font-semibold">${datos.resumen_financiero.ingresos.toLocaleString('es-AR')}</dd></div>
-            <div className="flex justify-between"><dt className="text-slate-500">Egresos del Mes</dt><dd className="text-red-500 font-semibold">${datos.resumen_financiero.egresos.toLocaleString('es-AR')}</dd></div>
+            <div className="flex justify-between"><dt className="text-slate-700">Ingresos del Mes</dt><dd className="text-green-600 font-semibold">${datos.resumen_financiero.ingresos.toLocaleString('es-AR')}</dd></div>
+            <div className="flex justify-between"><dt className="text-slate-700">Egresos del Mes</dt><dd className="text-red-500 font-semibold">${datos.resumen_financiero.egresos.toLocaleString('es-AR')}</dd></div>
             <div className="flex justify-between border-t border-slate-100 pt-2"><dt className="text-slate-700 font-medium">Balance</dt><dd className="font-bold text-slate-800">${datos.resumen_financiero.balance.toLocaleString('es-AR')}</dd></div>
           </dl>
         </div>
 
-        <div className="bg-white border border-slate-200 rounded-xl p-5">
+        <div className="bg-white border border-slate-400 rounded-xl p-5">
           <h3 className="flex items-center gap-1.5 text-sm font-semibold text-slate-800 mb-4">
-            <History size={15} className="text-slate-500" /> Actividad Reciente
+            <History size={15} className="text-slate-700" /> Actividad Reciente
           </h3>
           {datos.actividad_reciente.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-6 text-slate-400">
-              <History size={24} className="mb-2 text-slate-300" />
+            <div className="flex flex-col items-center justify-center py-6 text-slate-600">
+              <History size={24} className="mb-2 text-slate-700" />
               <p className="text-sm">No hay actividad reciente</p>
             </div>
           ) : (
@@ -145,16 +145,16 @@ export default function Dashboard() {
 
 function TarjetaKpi({ icono, label, valor, link, textoLink }) {
   return (
-    <div className="bg-white border border-slate-200 rounded-xl p-4">
+    <div className="bg-white border border-slate-400 rounded-xl p-4">
       <div className="flex items-center gap-2 mb-2">
         {icono}
-        <p className="text-xs text-slate-500">{label}</p>
+        <p className="text-xs text-slate-700">{label}</p>
       </div>
       <p className="text-2xl font-bold text-slate-800 mb-2">{valor}</p>
       {link ? (
         <Link to={link} className="text-xs text-blue-600 hover:underline">{textoLink}</Link>
       ) : (
-        <span className="text-xs text-slate-300">{textoLink}</span>
+        <span className="text-xs text-slate-700">{textoLink}</span>
       )}
     </div>
   )

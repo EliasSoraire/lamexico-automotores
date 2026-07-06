@@ -46,7 +46,7 @@ export default function TitularStockForm() {
   }
 
   if (cargando) {
-    return <div className="text-sm text-slate-400 py-10 text-center">Cargando...</div>
+    return <div className="text-sm text-slate-600 py-10 text-center">Cargando...</div>
   }
 
   return (
@@ -55,7 +55,7 @@ export default function TitularStockForm() {
         {esEdicion ? 'Editar Titular de Stock' : 'Nuevo Titular de Stock'}
       </h1>
 
-      <div className="bg-white border border-slate-200 rounded-xl p-6 max-w-xl">
+      <div className="bg-white border border-slate-400 rounded-xl p-6 max-w-xl">
         {error && (
           <div className="mb-4 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
             {error}
@@ -71,7 +71,7 @@ export default function TitularStockForm() {
               required
               value={form.nombre}
               onChange={(e) => setForm({ ...form, nombre: e.target.value })}
-              className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -81,7 +81,7 @@ export default function TitularStockForm() {
                 type="checkbox"
                 checked={form.activo}
                 onChange={(e) => setForm({ ...form, activo: e.target.checked })}
-                className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                className="rounded border-slate-400 text-blue-600 focus:ring-blue-500"
               />
               Activo
             </label>
@@ -91,7 +91,7 @@ export default function TitularStockForm() {
             <button
               type="button"
               onClick={() => navigate('/configuracion/titulares-stock')}
-              className="px-4 py-2 text-sm rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50"
+              className="px-4 py-2 text-sm rounded-lg border border-slate-400 text-slate-600 hover:bg-slate-50"
             >
               Cancelar
             </button>

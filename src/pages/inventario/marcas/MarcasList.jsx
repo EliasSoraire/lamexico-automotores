@@ -75,7 +75,7 @@ export default function MarcasList() {
           <Tag size={20} className="text-blue-600" />
           Marcas y Modelos
         </h1>
-        <button
+        <button type="button"
           onClick={() => navigate('/inventario/marcas-modelos/nueva')}
           className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg px-4 py-2"
         >
@@ -84,29 +84,29 @@ export default function MarcasList() {
         </button>
       </div>
 
-      <div className="bg-white border border-slate-200 rounded-xl p-4 mb-4">
+      <div className="bg-white border border-slate-400 rounded-xl p-4 mb-4">
         <form onSubmit={handleBuscar} className="flex flex-wrap items-end gap-3">
           <div className="flex-1 min-w-[240px]">
-            <label className="text-xs font-medium text-slate-500 mb-1 block">Buscar Marca</label>
+            <label className="text-xs font-medium text-slate-700 mb-1 block">Buscar Marca</label>
             <div className="relative">
-              <Search size={15} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400" />
+              <Search size={15} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-600" />
               <input
                 value={busquedaInput}
                 onChange={(e) => setBusquedaInput(e.target.value)}
                 placeholder="Buscar por nombre o código de marca..."
-                className="w-full text-sm border border-slate-200 rounded-lg pl-8 pr-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full text-sm border border-slate-400 rounded-lg pl-8 pr-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
           </div>
           <div>
-            <label className="text-xs font-medium text-slate-500 mb-1 block">Estado</label>
+            <label className="text-xs font-medium text-slate-700 mb-1 block">Estado</label>
             <select
               value={estado}
               onChange={(e) => {
                 setEstado(e.target.value)
                 setPage(1)
               }}
-              className="text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="activas">Solo activas</option>
               <option value="inactivas">Solo inactivas</option>
@@ -129,10 +129,10 @@ export default function MarcasList() {
         </div>
       )}
 
-      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
+      <div className="bg-white border border-slate-400 rounded-xl overflow-hidden">
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-slate-50 text-left text-xs font-semibold text-slate-500 uppercase">
+            <tr className="bg-slate-50 text-left text-xs font-semibold text-slate-700 uppercase">
               <th className="px-4 py-3">Marca</th>
               <th className="px-4 py-3">Código</th>
               <th className="px-4 py-3">Modelos</th>
@@ -143,7 +143,7 @@ export default function MarcasList() {
           <tbody className="divide-y divide-slate-100">
             {cargando && (
               <tr>
-                <td colSpan={5} className="px-4 py-8 text-center text-slate-400">
+                <td colSpan={5} className="px-4 py-8 text-center text-slate-600">
                   Cargando...
                 </td>
               </tr>
@@ -151,7 +151,7 @@ export default function MarcasList() {
 
             {!cargando && marcas.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-4 py-8 text-center text-slate-400">
+                <td colSpan={5} className="px-4 py-8 text-center text-slate-600">
                   No se encontraron marcas.
                 </td>
               </tr>
@@ -161,7 +161,7 @@ export default function MarcasList() {
               marcas.map((marca) => (
                 <tr key={marca.id} className="hover:bg-slate-50">
                   <td className="px-4 py-3 font-medium text-slate-800">{marca.nombre}</td>
-                  <td className="px-4 py-3 text-slate-500">{marca.codigo || '-'}</td>
+                  <td className="px-4 py-3 text-slate-700">{marca.codigo || '-'}</td>
                   <td className="px-4 py-3">
                     <Link
                       to={`/inventario/marcas-modelos/${marca.id}`}
@@ -175,14 +175,14 @@ export default function MarcasList() {
                       className={`text-xs font-medium px-2 py-0.5 rounded-full ${
                         marca.activa
                           ? 'bg-green-50 text-green-700'
-                          : 'bg-slate-100 text-slate-500'
+                          : 'bg-slate-100 text-slate-700'
                       }`}
                     >
                       {marca.activa ? 'Activa' : 'Inactiva'}
                     </span>
                   </td>
                   <td className="px-4 py-3">
-                    <div className="flex items-center gap-2 text-slate-400">
+                    <div className="flex items-center gap-2 text-slate-600">
                       <Link
                         to={`/inventario/marcas-modelos/${marca.id}`}
                         className="hover:text-blue-600"
@@ -197,7 +197,7 @@ export default function MarcasList() {
                       >
                         <Pencil size={16} />
                       </Link>
-                      <button
+                      <button type="button"
                         onClick={() => setMarcaAEliminar(marca)}
                         className="hover:text-red-600"
                         title="Eliminar"

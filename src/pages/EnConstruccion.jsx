@@ -7,7 +7,7 @@ export default function EnConstruccion({ nombre }) {
         <Construction size={28} className="text-amber-600" />
       </div>
       <h2 className="text-lg font-semibold text-slate-800 mb-1">{nombre}</h2>
-      <p className="text-sm text-slate-500 max-w-sm">
+      <p className="text-sm text-slate-700 max-w-sm">
         Esta pantalla todavía no fue construida. Se arma en un próximo paso, con su propia captura de referencia.
       </p>
     </div>
