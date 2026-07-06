@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import { Bell, ChevronDown, LogOut, Building2 } from 'lucide-react'
+import { Bell, ChevronDown, LogOut, Building2, Menu } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import { menuConfig } from '../config/menuConfig'
 
@@ -18,7 +18,7 @@ function useNombrePantalla() {
   return ''
 }
 
-export default function Topbar() {
+export default function Topbar({ onAbrirMenuMobil }) {
   const { usuario, logout } = useAuth()
   const [menuAbierto, setMenuAbierto] = useState(false)
   const nombrePantalla = useNombrePantalla()
@@ -26,15 +26,25 @@ export default function Topbar() {
   const inicial = usuario?.nombre_completo?.charAt(0)?.toUpperCase() || 'U'
 
   return (
-    <header className="h-16 bg-white border-b border-slate-400 flex items-center justify-between px-6 shrink-0">
-      <div className="text-sm text-slate-700">
-        <span className="text-slate-600">Dashboard</span>
-        {nombrePantalla && nombrePantalla !== 'Dashboard' && (
-          <>
-            <span className="mx-1.5 text-slate-700">/</span>
-            <span className="text-slate-700 font-medium">{nombrePantalla}</span>
-          </>
-        )}
+    <header className="h-16 bg-white border-b border-slate-400 flex items-center justify-between px-3 sm:px-6 shrink-0">
+      <div className="flex items-center gap-2 min-w-0">
+        <button
+          type="button"
+          onClick={onAbrirMenuMobil}
+          className="md:hidden text-slate-700 hover:text-slate-900 p-1.5 -ml-1.5 shrink-0"
+          title="Abrir menú"
+        >
+          <Menu size={22} />
+        </button>
+        <div className="text-sm text-slate-700 truncate">
+          <span className="text-slate-600">Dashboard</span>
+          {nombrePantalla && nombrePantalla !== 'Dashboard' && (
+            <>
+              <span className="mx-1.5 text-slate-700">/</span>
+              <span className="text-slate-700 font-medium">{nombrePantalla}</span>
+            </>
+          )}
+        </div>
       </div>
 
       <div className="flex items-center gap-4">
