@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { Save, Plus, AlertTriangle } from 'lucide-react'
 import { api } from '../../../lib/api'
 import FotosVehiculo from '../../../components/vehiculos/FotosVehiculo'
+import ModalCrearRapido from '../../../components/ui/ModalCrearRapido'
 
 const ESTADOS = ['Disponible', 'En Tránsito', 'Reservado', 'En Preparación', 'De Baja']
 const TABS = ['Básicos', 'Técnica', 'Comercial', 'Multimedia']
@@ -63,9 +64,9 @@ export default function VehiculoForm() {
   const [tiposPropiedad, setTiposPropiedad] = useState([])
   const [configGeneral, setConfigGeneral] = useState(null)
 
-  // Crear color al vuelo
-  const [creandoColor, setCreandoColor] = useState(false)
-  const [nuevoColor, setNuevoColor] = useState({ nombre: '', codigo_hex: '#000000' })
+  // Modal genérico de creación rápida (Marca, Modelo, Color, Color Interior,
+  // Condición, Transmisión, Combustible, Titular de Stock, Clasificación)
+  const [modalCrear, setModalCrear] = useState(null)
 
   useEffect(() => {
     Promise.all([
@@ -88,6 +89,12 @@ export default function VehiculoForm() {
       setMonedas(mon.data)
       setTitulares(tit.data)
       setClasificaciones(clas.data)
+
+      // Moneda por defecto: Peso Argentino, solo al crear (no pisa lo ya cargado al editar)
+      if (!esEdicion) {
+        const ars = mon.data.find((m) => m.codigo === 'ARS')
+        if (ars) setForm((f) => (f.moneda_id ? f : { ...f, moneda_id: ars.id }))
+      }
     }).catch((err) => setError(err.message))
 
     // Tipos de propiedad no tiene endpoint propio: lo resolvemos con una consulta liviana embebida
@@ -172,19 +179,6 @@ export default function VehiculoForm() {
 
   function actualizar(campo, valor) {
     setForm((f) => ({ ...f, [campo]: valor }))
-  }
-
-  async function crearColorRapido() {
-    if (!nuevoColor.nombre.trim()) return
-    try {
-      const res = await api.post('/api/colores', nuevoColor)
-      setColores((c) => [...c, res.data])
-      actualizar('color_id', res.data.id)
-      setCreandoColor(false)
-      setNuevoColor({ nombre: '', codigo_hex: '#000000' })
-    } catch (err) {
-      setError(err.message)
-    }
   }
 
   const anioActual = new Date().getFullYear()
@@ -299,12 +293,12 @@ export default function VehiculoForm() {
                   </p>
                 </div>
               )}
-              <Select label="Condición *" value={form.condicion_id} onChange={(v) => actualizar('condicion_id', v)} opciones={condiciones} placeholder="Seleccione" />
+              <Select label="Condición *" value={form.condicion_id} onChange={(v) => actualizar('condicion_id', v)} opciones={condiciones} placeholder="Seleccione" onCrear={() => setModalCrear('condicion')} />
               <div />
               <Input label="Año Modelo" type="number" value={form.año_modelo} onChange={(v) => actualizar('año_modelo', v)} max={anioActual} />
               <Input label="Año Fab." type="number" value={form.año_fab} onChange={(v) => actualizar('año_fab', v)} max={anioActual} />
               <Input label="Patente *" value={form.patente} onChange={(v) => actualizar('patente', v)} placeholder="ABC-123" />
-              <Select label="Marca *" value={form.marca_id} onChange={(v) => { actualizar('marca_id', v); actualizar('modelo_id', '') }} opciones={marcas} placeholder="Seleccione una marca" />
+              <Select label="Marca *" value={form.marca_id} onChange={(v) => { actualizar('marca_id', v); actualizar('modelo_id', '') }} opciones={marcas} placeholder="Seleccione una marca" onCrear={() => setModalCrear('marca')} />
               <Select
                 label="Modelo *"
                 value={form.modelo_id}
@@ -312,43 +306,9 @@ export default function VehiculoForm() {
                 opciones={modelos}
                 placeholder={form.marca_id ? 'Seleccione un modelo' : 'Primero seleccione la marca'}
                 deshabilitado={!form.marca_id}
+                onCrear={form.marca_id ? () => setModalCrear('modelo') : undefined}
               />
-              <div>
-                <label className="text-sm font-medium text-slate-700 mb-1 block">Color Exterior</label>
-                <div className="flex gap-2">
-                  <select
-                    value={form.color_id}
-                    onChange={(e) => actualizar('color_id', e.target.value)}
-                    className="flex-1 text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="">Seleccionar color...</option>
-                    {colores.map((c) => (
-                      <option key={c.id} value={c.id}>{c.nombre}</option>
-                    ))}
-                  </select>
-                  <button
-                    type="button"
-                    onClick={() => setCreandoColor(true)}
-                    className="border border-slate-400 rounded-lg px-2.5 text-slate-700 hover:bg-slate-50"
-                    title="Crear color nuevo"
-                  >
-                    <Plus size={16} />
-                  </button>
-                </div>
-                {creandoColor && (
-                  <div className="mt-2 flex gap-2 items-center bg-slate-50 border border-slate-400 rounded-lg p-2">
-                    <input type="color" value={nuevoColor.codigo_hex} onChange={(e) => setNuevoColor({ ...nuevoColor, codigo_hex: e.target.value })} className="w-8 h-8 rounded border border-slate-400" />
-                    <input
-                      value={nuevoColor.nombre}
-                      onChange={(e) => setNuevoColor({ ...nuevoColor, nombre: e.target.value })}
-                      placeholder="Nombre del color"
-                      className="flex-1 text-sm border border-slate-400 rounded-lg px-2 py-1.5"
-                    />
-                    <button type="button" onClick={crearColorRapido} className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg px-3 py-1.5">Crear</button>
-                    <button type="button" onClick={() => setCreandoColor(false)} className="text-xs text-slate-700 px-2">Cancelar</button>
-                  </div>
-                )}
-              </div>
+              <Select label="Color Exterior" value={form.color_id} onChange={(v) => actualizar('color_id', v)} opciones={colores} placeholder="Seleccionar color..." onCrear={() => setModalCrear('colorExterior')} />
               <Select label="Estado *" value={form.estado} onChange={(v) => actualizar('estado', v)} opciones={ESTADOS.map((e) => ({ id: e, nombre: e }))} />
               <Input label="Kilometraje *" type="number" value={form.kilometraje} onChange={(v) => actualizar('kilometraje', v)} placeholder="Requerido" />
               <label className="flex items-center gap-2 text-sm font-medium text-slate-700 mt-1">
@@ -360,12 +320,12 @@ export default function VehiculoForm() {
 
           {tab === 'Técnica' && (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Select label="Color Interior" value={form.color_interior_id} onChange={(v) => actualizar('color_interior_id', v)} opciones={coloresInterior} placeholder="Opcional" />
+              <Select label="Color Interior" value={form.color_interior_id} onChange={(v) => actualizar('color_interior_id', v)} opciones={coloresInterior} placeholder="Opcional" onCrear={() => setModalCrear('colorInterior')} />
               <div />
               <Input label="Número de Motor" value={form.numero_motor} onChange={(v) => actualizar('numero_motor', v)} placeholder="Opcional" />
               <Input label="Número de Chasis" value={form.numero_chasis} onChange={(v) => actualizar('numero_chasis', v)} placeholder="Opcional" />
-              <Select label="Transmisión" value={form.transmision_id} onChange={(v) => actualizar('transmision_id', v)} opciones={transmisiones} placeholder="Seleccione" />
-              <Select label="Combustible" value={form.combustible_id} onChange={(v) => actualizar('combustible_id', v)} opciones={combustibles} placeholder="Seleccione" />
+              <Select label="Transmisión" value={form.transmision_id} onChange={(v) => actualizar('transmision_id', v)} opciones={transmisiones} placeholder="Seleccione" onCrear={() => setModalCrear('transmision')} />
+              <Select label="Combustible" value={form.combustible_id} onChange={(v) => actualizar('combustible_id', v)} opciones={combustibles} placeholder="Seleccione" onCrear={() => setModalCrear('combustible')} />
             </div>
           )}
 
@@ -406,25 +366,36 @@ export default function VehiculoForm() {
 
               <div>
                 <label className="text-sm font-medium text-slate-700 mb-1 block">Titular/es de Stock</label>
-                <select
-                  disabled={esConsignacion}
-                  value={form.titular_stock_id}
-                  onChange={(e) => actualizar('titular_stock_id', e.target.value)}
-                  className={`w-full text-sm border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                    esConsignacion ? 'bg-slate-100 text-slate-600 border-slate-400 cursor-not-allowed' : 'border-slate-400'
-                  }`}
-                >
-                  <option value="">Buscar y agregar titular...</option>
-                  {titulares.map((t) => (
-                    <option key={t.id} value={t.id}>{t.nombre}</option>
-                  ))}
-                </select>
+                <div className="flex gap-2">
+                  <select
+                    disabled={esConsignacion}
+                    value={form.titular_stock_id}
+                    onChange={(e) => actualizar('titular_stock_id', e.target.value)}
+                    className={`flex-1 text-sm border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                      esConsignacion ? 'bg-slate-100 text-slate-600 border-slate-400 cursor-not-allowed' : 'border-slate-400'
+                    }`}
+                  >
+                    <option value="">Buscar y agregar titular...</option>
+                    {titulares.map((t) => (
+                      <option key={t.id} value={t.id}>{t.nombre}</option>
+                    ))}
+                  </select>
+                  <button
+                    type="button"
+                    disabled={esConsignacion}
+                    onClick={() => setModalCrear('titular')}
+                    className="border border-slate-400 rounded-lg px-2.5 text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed"
+                    title="Crear titular nuevo"
+                  >
+                    <Plus size={16} />
+                  </button>
+                </div>
                 <p className="text-xs text-slate-600 mt-1">
                   {esConsignacion ? 'No aplicable a consignación.' : 'Visible solo para roles autorizados.'}
                 </p>
               </div>
 
-              <Select label="Clasificación" value={form.clasificacion_id} onChange={(v) => actualizar('clasificacion_id', v)} opciones={clasificaciones} placeholder="Buscar y agregar clasificación..." />
+              <Select label="Clasificación" value={form.clasificacion_id} onChange={(v) => actualizar('clasificacion_id', v)} opciones={clasificaciones} placeholder="Buscar y agregar clasificación..." onCrear={() => setModalCrear('clasificacion')} />
             </div>
           )}
 
@@ -465,6 +436,164 @@ export default function VehiculoForm() {
           </div>
         </form>
       </div>
+
+      <ModalCrearRapido
+        abierto={modalCrear === 'marca'}
+        titulo="Nueva Marca"
+        campos={[{ key: 'nombre', label: 'Nombre', tipo: 'texto', requerido: true }]}
+        onCrear={async (datos) => {
+          const res = await api.post('/api/marcas', { nombre: datos.nombre })
+          return res.data
+        }}
+        onCreado={(nueva) => {
+          setMarcas((m) => [...m, nueva])
+          actualizar('marca_id', nueva.id)
+          actualizar('modelo_id', '')
+        }}
+        onCerrar={() => setModalCrear(null)}
+      />
+
+      <ModalCrearRapido
+        abierto={modalCrear === 'modelo'}
+        titulo="Nuevo Modelo"
+        campos={[
+          { key: 'nombre', label: 'Nombre', tipo: 'texto', requerido: true },
+          { key: 'version', label: 'Versión', tipo: 'texto', requerido: false },
+          { key: 'anio', label: 'Año', tipo: 'numero', requerido: false },
+        ]}
+        onCrear={async (datos) => {
+          const res = await api.post('/api/modelos', {
+            marca_id: form.marca_id,
+            nombre: datos.nombre,
+            version: datos.version || null,
+            anio: datos.anio || null,
+          })
+          return res.data
+        }}
+        onCreado={(nuevo) => {
+          setModelos((m) => [...m, nuevo])
+          actualizar('modelo_id', nuevo.id)
+        }}
+        onCerrar={() => setModalCrear(null)}
+      />
+
+      <ModalCrearRapido
+        abierto={modalCrear === 'colorExterior'}
+        titulo="Nuevo Color"
+        campos={[
+          { key: 'nombre', label: 'Nombre', tipo: 'texto', requerido: true },
+          { key: 'codigo_hex', label: 'Color', tipo: 'color', requerido: true, valorDefecto: '#000000' },
+        ]}
+        onCrear={async (datos) => {
+          const res = await api.post('/api/colores', { nombre: datos.nombre, codigo_hex: datos.codigo_hex })
+          return res.data
+        }}
+        onCreado={(nuevo) => {
+          setColores((c) => [...c, nuevo])
+          actualizar('color_id', nuevo.id)
+        }}
+        onCerrar={() => setModalCrear(null)}
+      />
+
+      <ModalCrearRapido
+        abierto={modalCrear === 'colorInterior'}
+        titulo="Nuevo Color Interior"
+        campos={[
+          { key: 'nombre', label: 'Nombre', tipo: 'texto', requerido: true },
+          { key: 'codigo_hex', label: 'Color', tipo: 'color', requerido: false, valorDefecto: '#000000' },
+        ]}
+        onCrear={async (datos) => {
+          const res = await api.post('/api/catalogos-vehiculo?tipo=colores-interior', datos)
+          return res.data
+        }}
+        onCreado={(nuevo) => {
+          setColoresInterior((c) => [...c, nuevo])
+          actualizar('color_interior_id', nuevo.id)
+        }}
+        onCerrar={() => setModalCrear(null)}
+      />
+
+      <ModalCrearRapido
+        abierto={modalCrear === 'condicion'}
+        titulo="Nueva Condición"
+        campos={[{ key: 'nombre', label: 'Nombre', tipo: 'texto', requerido: true }]}
+        onCrear={async (datos) => {
+          const res = await api.post('/api/catalogos-vehiculo?tipo=condiciones', datos)
+          return res.data
+        }}
+        onCreado={(nueva) => {
+          setCondiciones((c) => [...c, nueva])
+          actualizar('condicion_id', nueva.id)
+        }}
+        onCerrar={() => setModalCrear(null)}
+      />
+
+      <ModalCrearRapido
+        abierto={modalCrear === 'transmision'}
+        titulo="Nueva Transmisión"
+        campos={[{ key: 'nombre', label: 'Nombre', tipo: 'texto', requerido: true }]}
+        onCrear={async (datos) => {
+          const res = await api.post('/api/catalogos-vehiculo?tipo=transmisiones', datos)
+          return res.data
+        }}
+        onCreado={(nueva) => {
+          setTransmisiones((t) => [...t, nueva])
+          actualizar('transmision_id', nueva.id)
+        }}
+        onCerrar={() => setModalCrear(null)}
+      />
+
+      <ModalCrearRapido
+        abierto={modalCrear === 'combustible'}
+        titulo="Nuevo Combustible"
+        campos={[{ key: 'nombre', label: 'Nombre', tipo: 'texto', requerido: true }]}
+        onCrear={async (datos) => {
+          const res = await api.post('/api/catalogos-vehiculo?tipo=combustibles', datos)
+          return res.data
+        }}
+        onCreado={(nuevo) => {
+          setCombustibles((c) => [...c, nuevo])
+          actualizar('combustible_id', nuevo.id)
+        }}
+        onCerrar={() => setModalCrear(null)}
+      />
+
+      <ModalCrearRapido
+        abierto={modalCrear === 'titular'}
+        titulo="Nuevo Titular de Stock"
+        campos={[{ key: 'nombre', label: 'Nombre / Razón Social', tipo: 'texto', requerido: true }]}
+        onCrear={async (datos) => {
+          const res = await api.post('/api/titulares-stock', { nombre: datos.nombre, activo: true })
+          return res.data
+        }}
+        onCreado={(nuevo) => {
+          setTitulares((t) => [...t, nuevo])
+          actualizar('titular_stock_id', nuevo.id)
+        }}
+        onCerrar={() => setModalCrear(null)}
+      />
+
+      <ModalCrearRapido
+        abierto={modalCrear === 'clasificacion'}
+        titulo="Nueva Clasificación"
+        campos={[
+          { key: 'nombre', label: 'Nombre', tipo: 'texto', requerido: true },
+          { key: 'color_hex', label: 'Color', tipo: 'color', requerido: true, valorDefecto: '#3B82F6' },
+        ]}
+        onCrear={async (datos) => {
+          const res = await api.post('/api/clasificaciones', {
+            nombre: datos.nombre,
+            color_hex: datos.color_hex,
+            activo: true,
+          })
+          return res.data
+        }}
+        onCreado={(nueva) => {
+          setClasificaciones((c) => [...c, nueva])
+          actualizar('clasificacion_id', nueva.id)
+        }}
+        onCerrar={() => setModalCrear(null)}
+      />
 
       {confirmando && (
         <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 px-4">
@@ -514,23 +643,36 @@ function Input({ label, type = 'text', value, onChange, placeholder, max }) {
   )
 }
 
-function Select({ label, value, onChange, opciones, placeholder, deshabilitado }) {
+function Select({ label, value, onChange, opciones, placeholder, deshabilitado, onCrear }) {
   return (
     <div>
       <label className="text-sm font-medium text-slate-700 mb-1 block">{label}</label>
-      <select
-        disabled={deshabilitado}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className={`w-full text-sm border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-          deshabilitado ? 'bg-slate-100 text-slate-600 border-slate-400 cursor-not-allowed' : 'border-slate-400'
-        }`}
-      >
-        <option value="">{placeholder || 'Seleccione'}</option>
-        {opciones.map((o) => (
-          <option key={o.id} value={o.id}>{o.nombre}</option>
-        ))}
-      </select>
+      <div className="flex gap-2">
+        <select
+          disabled={deshabilitado}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className={`flex-1 text-sm border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            deshabilitado ? 'bg-slate-100 text-slate-600 border-slate-400 cursor-not-allowed' : 'border-slate-400'
+          }`}
+        >
+          <option value="">{placeholder || 'Seleccione'}</option>
+          {opciones.map((o) => (
+            <option key={o.id} value={o.id}>{o.nombre}</option>
+          ))}
+        </select>
+        {onCrear && (
+          <button
+            type="button"
+            onClick={onCrear}
+            disabled={deshabilitado}
+            className="border border-slate-400 rounded-lg px-2.5 text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed"
+            title="Crear nuevo"
+          >
+            <Plus size={16} />
+          </button>
+        )}
+      </div>
     </div>
   )
 }

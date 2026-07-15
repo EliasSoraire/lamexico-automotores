@@ -70,6 +70,10 @@ export default function ModeloForm() {
       try {
         const res = await api.get('/api/monedas')
         setMonedas(res.data)
+        if (!esEdicion) {
+          const ars = res.data.find((m) => m.codigo === 'ARS')
+          if (ars) setForm((f) => (f.moneda_id ? f : { ...f, moneda_id: ars.id }))
+        }
       } catch {
         // silencioso: el selector queda vacío si falla
       }
