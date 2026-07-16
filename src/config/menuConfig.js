@@ -27,12 +27,12 @@ export const menuConfig = [
     nombre: 'Ventas',
     icono: 'ShoppingCart',
     items: [
-      { nombre: 'Clientes', path: '/ventas/clientes', proximamente: true },
+      { nombre: 'Clientes', path: '/ventas/clientes', proximamente: false },
       { nombre: 'Consultas', path: '/ventas/consultas', proximamente: true },
       { nombre: 'Presupuesto', path: '/ventas/presupuestos', proximamente: true },
       { nombre: 'Gestión de Ventas', path: '/ventas/gestion', proximamente: true },
       { nombre: 'Ítems Adicionales', path: '/ventas/items-adicionales', proximamente: true },
-      { nombre: 'Canales de Origen', path: '/ventas/canales-origen', proximamente: true },
+      { nombre: 'Canales de Origen', path: '/ventas/canales-origen', proximamente: false },
     ],
   },
   {

@@ -25,6 +25,11 @@ import UsuarioForm from './pages/configuracion/usuarios/UsuarioForm'
 import UsuarioDetalle from './pages/configuracion/usuarios/UsuarioDetalle'
 import ConfiguracionGeneral from './pages/configuracion/general/ConfiguracionGeneral'
 import Perfil from './pages/perfil/Perfil'
+import CanalesOrigenList from './pages/ventas/canales-origen/CanalesOrigenList'
+import CanalOrigenForm from './pages/ventas/canales-origen/CanalOrigenForm'
+import ClientesList from './pages/ventas/clientes/ClientesList'
+import ClienteForm from './pages/ventas/clientes/ClienteForm'
+import ClienteDetalle from './pages/ventas/clientes/ClienteDetalle'
 import { menuConfig } from './config/menuConfig'
 
 // Rutas de módulos que ya tienen pantallas propias construidas.
@@ -38,6 +43,8 @@ const RUTAS_CONSTRUIDAS = new Set([
   '/inventario/vehiculos',
   '/configuracion/usuarios',
   '/configuracion/general',
+  '/ventas/canales-origen',
+  '/ventas/clientes',
 ])
 
 function generarRutasDeModulos() {
@@ -124,6 +131,17 @@ function App() {
 
             {/* Mi Perfil */}
             <Route path="/perfil" element={<Perfil />} />
+
+            {/* Canales de Origen */}
+            <Route path="/ventas/canales-origen" element={<CanalesOrigenList />} />
+            <Route path="/ventas/canales-origen/nuevo" element={<CanalOrigenForm />} />
+            <Route path="/ventas/canales-origen/:id/editar" element={<CanalOrigenForm />} />
+
+            {/* Clientes */}
+            <Route path="/ventas/clientes" element={<ClientesList />} />
+            <Route path="/ventas/clientes/nuevo" element={<ClienteForm />} />
+            <Route path="/ventas/clientes/:id" element={<ClienteDetalle />} />
+            <Route path="/ventas/clientes/:id/editar" element={<ClienteForm />} />
 
             {generarRutasDeModulos()}
           </Route>

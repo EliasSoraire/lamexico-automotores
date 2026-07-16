@@ -28,6 +28,12 @@ import dashboardIndex from './_routes/dashboard/index.js'
 import configuracionGeneral from './_routes/configuracion-general/index.js'
 import perfilIndex from './_routes/perfil/index.js'
 import perfilPassword from './_routes/perfil/password.js'
+import canalesOrigenIndex from './_routes/canales-origen/index.js'
+import canalesOrigenDetalle from './_routes/canales-origen/detalle.js'
+import catalogosCliente from './_routes/catalogos-cliente/index.js'
+import clientesIndex from './_routes/clientes/index.js'
+import clientesDetalle from './_routes/clientes/detalle.js'
+import clientesAdjuntos from './_routes/clientes/adjuntos.js'
 
 const app = express()
 app.use(express.json())
@@ -62,6 +68,12 @@ const rutas = [
   ['/api/configuracion-general', configuracionGeneral],
   ['/api/perfil', perfilIndex],
   ['/api/perfil/password', perfilPassword],
+  ['/api/canales-origen', canalesOrigenIndex],
+  ['/api/canales-origen/detalle', canalesOrigenDetalle],
+  ['/api/catalogos-cliente', catalogosCliente],
+  ['/api/clientes', clientesIndex],
+  ['/api/clientes/detalle', clientesDetalle],
+  ['/api/clientes/adjuntos', clientesAdjuntos],
 ]
 
 rutas.forEach(([ruta, handler]) => {
