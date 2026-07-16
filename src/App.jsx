@@ -30,6 +30,11 @@ import CanalOrigenForm from './pages/ventas/canales-origen/CanalOrigenForm'
 import ClientesList from './pages/ventas/clientes/ClientesList'
 import ClienteForm from './pages/ventas/clientes/ClienteForm'
 import ClienteDetalle from './pages/ventas/clientes/ClienteDetalle'
+import ConsultasList from './pages/ventas/consultas/ConsultasList'
+import ConsultaForm from './pages/ventas/consultas/ConsultaForm'
+import ConsultaDetalle from './pages/ventas/consultas/ConsultaDetalle'
+import ItemsAdicionalesList from './pages/ventas/items-adicionales/ItemsAdicionalesList'
+import ItemAdicionalForm from './pages/ventas/items-adicionales/ItemAdicionalForm'
 import { menuConfig } from './config/menuConfig'
 
 // Rutas de módulos que ya tienen pantallas propias construidas.
@@ -45,6 +50,8 @@ const RUTAS_CONSTRUIDAS = new Set([
   '/configuracion/general',
   '/ventas/canales-origen',
   '/ventas/clientes',
+  '/ventas/consultas',
+  '/ventas/items-adicionales',
 ])
 
 function generarRutasDeModulos() {
@@ -142,6 +149,17 @@ function App() {
             <Route path="/ventas/clientes/nuevo" element={<ClienteForm />} />
             <Route path="/ventas/clientes/:id" element={<ClienteDetalle />} />
             <Route path="/ventas/clientes/:id/editar" element={<ClienteForm />} />
+
+            {/* Consultas */}
+            <Route path="/ventas/consultas" element={<ConsultasList />} />
+            <Route path="/ventas/consultas/nueva" element={<ConsultaForm />} />
+            <Route path="/ventas/consultas/:id" element={<ConsultaDetalle />} />
+            <Route path="/ventas/consultas/:id/editar" element={<ConsultaForm />} />
+
+            {/* Ítems Adicionales */}
+            <Route path="/ventas/items-adicionales" element={<ItemsAdicionalesList />} />
+            <Route path="/ventas/items-adicionales/nuevo" element={<ItemAdicionalForm />} />
+            <Route path="/ventas/items-adicionales/:id/editar" element={<ItemAdicionalForm />} />
 
             {generarRutasDeModulos()}
           </Route>

@@ -34,6 +34,12 @@ import catalogosCliente from './_routes/catalogos-cliente/index.js'
 import clientesIndex from './_routes/clientes/index.js'
 import clientesDetalle from './_routes/clientes/detalle.js'
 import clientesAdjuntos from './_routes/clientes/adjuntos.js'
+import catalogosConsulta from './_routes/catalogos-consulta/index.js'
+import consultasIndex from './_routes/consultas/index.js'
+import consultasDetalle from './_routes/consultas/detalle.js'
+import categoriasItems from './_routes/categorias-items/index.js'
+import itemsAdicionalesIndex from './_routes/items-adicionales/index.js'
+import itemsAdicionalesDetalle from './_routes/items-adicionales/detalle.js'
 
 const app = express()
 app.use(express.json())
@@ -74,6 +80,12 @@ const rutas = [
   ['/api/clientes', clientesIndex],
   ['/api/clientes/detalle', clientesDetalle],
   ['/api/clientes/adjuntos', clientesAdjuntos],
+  ['/api/catalogos-consulta', catalogosConsulta],
+  ['/api/consultas', consultasIndex],
+  ['/api/consultas/detalle', consultasDetalle],
+  ['/api/categorias-items', categoriasItems],
+  ['/api/items-adicionales', itemsAdicionalesIndex],
+  ['/api/items-adicionales/detalle', itemsAdicionalesDetalle],
 ]
 
 rutas.forEach(([ruta, handler]) => {
