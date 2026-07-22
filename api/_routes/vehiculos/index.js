@@ -12,13 +12,46 @@ export default async function handler(req, res) {
   return res.status(405).json({ error: 'Método no permitido' })
 }
 
-function aplicarFiltros(query, req) {
+async function aplicarFiltros(query, req) {
   const { busqueda, estado, condicion_id, titular_stock_id, gnc, clasificacion_id } = req.query
 
   if (busqueda) {
-    query = query.or(
-      `patente.ilike.%${busqueda}%,numero_motor.ilike.%${busqueda}%,numero_chasis.ilike.%${busqueda}%`
-    )
+    // Buscamos en 3 frentes por separado (texto directo, marca, modelo) y
+    // combinamos los IDs resultantes, para evitar mezclar or() con in()
+    // en una sola cadena (las comas internas de in.(...) chocan con las
+    // comas que separan las condiciones del or()).
+    const [{ data: porTexto }, { data: marcasCoincidentes }, { data: modelosCoincidentes }] = await Promise.all([
+      supabaseAdmin
+        .from('vehiculos')
+        .select('id')
+        .or(`patente.ilike.%${busqueda}%,numero_motor.ilike.%${busqueda}%,numero_chasis.ilike.%${busqueda}%`),
+      supabaseAdmin.from('marcas').select('id').ilike('nombre', `%${busqueda}%`),
+      supabaseAdmin.from('modelos').select('id').ilike('nombre', `%${busqueda}%`),
+    ])
+
+    const marcaIds = (marcasCoincidentes || []).map((m) => m.id)
+    const modeloIds = (modelosCoincidentes || []).map((m) => m.id)
+
+    let idsPorMarca = []
+    if (marcaIds.length > 0) {
+      const { data } = await supabaseAdmin.from('vehiculos').select('id').in('marca_id', marcaIds)
+      idsPorMarca = (data || []).map((v) => v.id)
+    }
+
+    let idsPorModelo = []
+    if (modeloIds.length > 0) {
+      const { data } = await supabaseAdmin.from('vehiculos').select('id').in('modelo_id', modeloIds)
+      idsPorModelo = (data || []).map((v) => v.id)
+    }
+
+    const idsUnicos = Array.from(new Set([
+      ...(porTexto || []).map((v) => v.id),
+      ...idsPorMarca,
+      ...idsPorModelo,
+    ]))
+
+    // Si no hay ninguna coincidencia, forzamos un resultado vacío (id imposible)
+    query = idsUnicos.length > 0 ? query.in('id', idsUnicos) : query.eq('id', -1)
   }
   if (estado) query = query.eq('estado', estado)
   if (condicion_id) query = query.eq('condicion_id', condicion_id)
@@ -27,7 +60,10 @@ function aplicarFiltros(query, req) {
   if (gnc === 'false') query = query.eq('gnc', false)
   if (clasificacion_id) query = query.eq('clasificacion_id', clasificacion_id)
 
-  return query
+  // Se devuelve envuelto en un objeto (no el builder "pelado") para evitar que,
+  // al hacer "return" de un valor con .then() dentro de una función async,
+  // JavaScript ejecute la consulta antes de tiempo en vez de dejarla encadenable.
+  return { query }
 }
 
 async function listarVehiculos(req, res) {
@@ -46,17 +82,15 @@ async function listarVehiculos(req, res) {
         { count: 'exact' }
       )
 
-    query = aplicarFiltros(query, req)
-    query = query.order('fecha_creacion', { ascending: false }).range(desde, hasta)
+    const { query: queryFiltrada } = await aplicarFiltros(query, req)
+    query = queryFiltrada.order('fecha_creacion', { ascending: false }).range(desde, hasta)
 
     const { data, error, count } = await query
 
     if (error) {
-      console.error('Error listando vehículos:', error)
-      return res.status(500).json({ error: 'Error al obtener los vehículos' })
+      return res.status(500).json({ error: formatearErrorDb(error, 'listando vehículos') })
     }
 
-    // Contadores por estado (sobre el total, no solo la página actual)
     const estadosAContar = ['Disponible', 'En Preparación', 'En Tránsito', 'Reservado']
     const conteos = {}
     await Promise.all(
@@ -143,7 +177,7 @@ async function crearVehiculo(req, res) {
       if (error.code === '23505') {
         return res.status(409).json({ error: 'Ya existe un vehículo con esa patente' })
       }
-      return res.status(500).json({ error: formatearErrorDb(error, 'crear vehículo') })
+      return res.status(500).json({ error: formatearErrorDb(error, 'creando vehículo') })
     }
 
     return res.status(201).json({ data })

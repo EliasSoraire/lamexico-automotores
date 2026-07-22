@@ -6,35 +6,50 @@ import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import Proximamente from './pages/Proximamente'
 import EnConstruccion from './pages/EnConstruccion'
+
 import MarcasList from './pages/inventario/marcas/MarcasList'
 import MarcaForm from './pages/inventario/marcas/MarcaForm'
 import MarcaDetalle from './pages/inventario/marcas/MarcaDetalle'
 import ModeloForm from './pages/inventario/marcas/ModeloForm'
+
 import ColoresList from './pages/inventario/colores/ColoresList'
 import ColorForm from './pages/inventario/colores/ColorForm'
+
 import ClasificacionesList from './pages/inventario/clasificaciones/ClasificacionesList'
 import ClasificacionForm from './pages/inventario/clasificaciones/ClasificacionForm'
 import ClasificacionDetalle from './pages/inventario/clasificaciones/ClasificacionDetalle'
+
 import TitularesStockList from './pages/configuracion/titulares-stock/TitularesStockList'
 import TitularStockForm from './pages/configuracion/titulares-stock/TitularStockForm'
+
 import VehiculosList from './pages/inventario/vehiculos/VehiculosList'
 import VehiculoForm from './pages/inventario/vehiculos/VehiculoForm'
 import VehiculoDetalle from './pages/inventario/vehiculos/VehiculoDetalle'
+
 import UsuariosList from './pages/configuracion/usuarios/UsuariosList'
 import UsuarioForm from './pages/configuracion/usuarios/UsuarioForm'
 import UsuarioDetalle from './pages/configuracion/usuarios/UsuarioDetalle'
+
 import ConfiguracionGeneral from './pages/configuracion/general/ConfiguracionGeneral'
 import Perfil from './pages/perfil/Perfil'
+
 import CanalesOrigenList from './pages/ventas/canales-origen/CanalesOrigenList'
 import CanalOrigenForm from './pages/ventas/canales-origen/CanalOrigenForm'
+
 import ClientesList from './pages/ventas/clientes/ClientesList'
 import ClienteForm from './pages/ventas/clientes/ClienteForm'
 import ClienteDetalle from './pages/ventas/clientes/ClienteDetalle'
+
 import ConsultasList from './pages/ventas/consultas/ConsultasList'
 import ConsultaForm from './pages/ventas/consultas/ConsultaForm'
 import ConsultaDetalle from './pages/ventas/consultas/ConsultaDetalle'
+
 import ItemsAdicionalesList from './pages/ventas/items-adicionales/ItemsAdicionalesList'
 import ItemAdicionalForm from './pages/ventas/items-adicionales/ItemAdicionalForm'
+
+import PresupuestosList from './pages/ventas/presupuestos/PresupuestosList'
+import PresupuestoForm from './pages/ventas/presupuestos/PresupuestoForm'
+
 import { menuConfig } from './config/menuConfig'
 
 // Rutas de módulos que ya tienen pantallas propias construidas.
@@ -52,6 +67,7 @@ const RUTAS_CONSTRUIDAS = new Set([
   '/ventas/clientes',
   '/ventas/consultas',
   '/ventas/items-adicionales',
+  '/ventas/presupuestos',
 ])
 
 function generarRutasDeModulos() {
@@ -160,6 +176,11 @@ function App() {
             <Route path="/ventas/items-adicionales" element={<ItemsAdicionalesList />} />
             <Route path="/ventas/items-adicionales/nuevo" element={<ItemAdicionalForm />} />
             <Route path="/ventas/items-adicionales/:id/editar" element={<ItemAdicionalForm />} />
+
+            {/* Presupuestos */}
+            <Route path="/ventas/presupuestos" element={<PresupuestosList />} />
+            <Route path="/ventas/presupuestos/nuevo" element={<PresupuestoForm />} />
+            <Route path="/ventas/presupuestos/:id/editar" element={<PresupuestoForm />} />
 
             {generarRutasDeModulos()}
           </Route>

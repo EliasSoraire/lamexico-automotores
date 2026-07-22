@@ -1,6 +1,4 @@
 import express from 'express'
-
-// Handlers de la API (mismo código en desarrollo local y en producción)
 import authLogin from './_routes/auth/login.js'
 import authMe from './_routes/auth/me.js'
 import marcasIndex from './_routes/marcas/index.js'
@@ -40,6 +38,10 @@ import consultasDetalle from './_routes/consultas/detalle.js'
 import categoriasItems from './_routes/categorias-items/index.js'
 import itemsAdicionalesIndex from './_routes/items-adicionales/index.js'
 import itemsAdicionalesDetalle from './_routes/items-adicionales/detalle.js'
+import catalogosPresupuesto from './_routes/catalogos-presupuesto/index.js'
+import presupuestosIndex from './_routes/presupuestos/index.js'
+import presupuestosDetalle from './_routes/presupuestos/detalle.js'
+import presupuestosPermutas from './_routes/presupuestos/permutas.js'
 
 const app = express()
 app.use(express.json())
@@ -86,6 +88,10 @@ const rutas = [
   ['/api/categorias-items', categoriasItems],
   ['/api/items-adicionales', itemsAdicionalesIndex],
   ['/api/items-adicionales/detalle', itemsAdicionalesDetalle],
+  ['/api/catalogos-presupuesto', catalogosPresupuesto],
+  ['/api/presupuestos', presupuestosIndex],
+  ['/api/presupuestos/detalle', presupuestosDetalle],
+  ['/api/presupuestos/permutas', presupuestosPermutas],
 ]
 
 rutas.forEach(([ruta, handler]) => {

@@ -32,8 +32,7 @@ async function verVehiculo(req, res, id) {
     .maybeSingle()
 
   if (error) {
-    console.error('Error obteniendo vehículo:', error)
-    return res.status(500).json({ error: 'Error al obtener el vehículo' })
+    return res.status(500).json({ error: formatearErrorDb(error, 'obteniendo vehículo') })
   }
   if (!data) return res.status(404).json({ error: 'Vehículo no encontrado' })
 
@@ -103,7 +102,7 @@ async function actualizarVehiculo(req, res, id) {
       if (error.code === '23505') {
         return res.status(409).json({ error: 'Ya existe un vehículo con esa patente' })
       }
-      return res.status(500).json({ error: formatearErrorDb(error, 'actualizar vehículo') })
+      return res.status(500).json({ error: formatearErrorDb(error, 'actualizando vehículo') })
     }
 
     return res.status(200).json({ data })
@@ -115,11 +114,39 @@ async function actualizarVehiculo(req, res, id) {
 
 async function eliminarVehiculo(req, res, id) {
   try {
+    // Chequeos previos con mensajes claros, antes de intentar el DELETE
+    // (evita el genérico "Error al eliminar" cuando en realidad es una
+    // restricción de clave foránea con otra tabla).
+    const [
+      { count: usadoComoPermuta },
+      { count: usadoComoUnidadCotizada },
+    ] = await Promise.all([
+      supabaseAdmin
+        .from('vehiculos_permuta_presupuesto')
+        .select('id', { count: 'exact', head: true })
+        .eq('vehiculo_id', id),
+      supabaseAdmin
+        .from('presupuestos')
+        .select('id', { count: 'exact', head: true })
+        .eq('vehiculo_stock_id', id),
+    ])
+
+    if (usadoComoPermuta > 0) {
+      return res.status(409).json({
+        error: `No se puede eliminar: este vehículo está cargado como parte de pago (permuta) en ${usadoComoPermuta} presupuesto(s).`,
+      })
+    }
+
+    if (usadoComoUnidadCotizada > 0) {
+      return res.status(409).json({
+        error: `No se puede eliminar: este vehículo está seleccionado como "Unidad cotizada" en ${usadoComoUnidadCotizada} presupuesto(s).`,
+      })
+    }
+
     const { error } = await supabaseAdmin.from('vehiculos').delete().eq('id', id)
 
     if (error) {
-      console.error('Error eliminando vehículo:', error)
-      return res.status(500).json({ error: 'Error al eliminar el vehículo' })
+      return res.status(500).json({ error: formatearErrorDb(error, 'eliminando vehículo') })
     }
 
     return res.status(200).json({ ok: true })
