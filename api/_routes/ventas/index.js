@@ -1,6 +1,7 @@
 import { supabaseAdmin } from '../../_lib/supabaseAdmin.js'
 import { requireAuth } from '../../_lib/requireAuth.js'
 import { formatearErrorDb } from '../../_lib/formatearErrorDb.js'
+import { generarPlanPagoSiCorresponde } from '../../_lib/generarPlanPago.js'
 
 export default async function handler(req, res) {
   const user = requireAuth(req, res)
@@ -176,6 +177,13 @@ async function crearVenta(req, res, user) {
 
     if (error) {
       return res.status(500).json({ error: formatearErrorDb(error, 'creando venta') })
+    }
+
+    try {
+      await generarPlanPagoSiCorresponde(data.id, data.cliente_id, body)
+    } catch (errPlan) {
+      console.error('Error generando plan de pago al crear venta:', errPlan)
+      // No hacemos fallar la creación de la venta por esto
     }
 
     return res.status(201).json({ data })

@@ -219,6 +219,12 @@ export default function VentaForm() {
     if (!fechaVenta) return 'La Fecha de Venta es obligatoria (pestaña Información Básica)'
     if (!monedaId) return 'La Moneda es obligatoria (pestaña Información Básica)'
     if (!estadoId) return 'El Estado de la Venta es obligatorio (pestaña Información Básica)'
+
+    const camposFinanciacion = [importeFinanciar, cantidadCuotas, importeCuota, primeraCuota]
+    const algunoCompleto = camposFinanciacion.some((c) => c !== '' && c !== null && c !== undefined)
+    if (algunoCompleto && !(importeFinanciar && cantidadCuotas && importeCuota && primeraCuota)) {
+      return 'Para generar el Plan de Pago completá Importe a Financiar, Cantidad de Cuotas, Importe de Cuota y Primera Cuota (pestaña Financiación)'
+    }
     return null
   }
 
@@ -226,7 +232,11 @@ export default function VentaForm() {
     e.preventDefault()
     setError('')
     const mensaje = validar()
-    if (mensaje) { setError(mensaje); setTab('Información Básica'); return }
+    if (mensaje) {
+      setError(mensaje)
+      setTab(mensaje.includes('pestaña Financiación') ? 'Financiación' : 'Información Básica')
+      return
+    }
     guardar()
   }
 
@@ -427,7 +437,10 @@ export default function VentaForm() {
 
               <div className="border border-blue-200 bg-blue-50/40 rounded-lg p-4">
                 <h3 className="text-sm font-semibold text-slate-800 mb-1">Financiación Propia</h3>
-                <p className="text-xs text-slate-500 mb-3">Datos informativos. La gestión real de cuotas se suma más adelante (Planes de Pago).</p>
+                <p className="text-xs text-slate-500 mb-3">
+                  Si completás estos 4 campos, al guardar se genera automáticamente un Plan de Pago real con sus cuotas
+                  (visible en Finanzas → Planes de Pago). Si ya existe un plan para esta venta, no se vuelve a regenerar.
+                </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <CampoMonto label="Importe a Financiar" value={importeFinanciar} onChange={setImporteFinanciar} placeholder="Importe a financiar" />
                   <div>
@@ -444,6 +457,7 @@ export default function VentaForm() {
                     <input type="date" value={primeraCuota} onChange={(e) => setPrimeraCuota(e.target.value)} className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2" />
                   </div>
                 </div>
+                <p className="text-xs text-slate-400 mt-2">Importe a Financiar, Cantidad de Cuotas, Importe de Cuota y Primera Cuota van juntos: o se completan los 4, o se dejan los 4 vacíos.</p>
               </div>
 
               <div className="border border-green-200 bg-green-50/40 rounded-lg p-4">

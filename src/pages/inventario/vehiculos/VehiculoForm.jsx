@@ -9,6 +9,7 @@ const ESTADOS = ['Disponible', 'En Tránsito', 'Reservado', 'En Preparación', '
 const TABS = ['Básicos', 'Técnica', 'Comercial', 'Multimedia']
 
 const FORM_VACIO = {
+  tipo_vehiculo_id: '',
   condicion_id: '',
   año_modelo: '',
   año_fab: '',
@@ -56,6 +57,7 @@ export default function VehiculoForm() {
   const [colores, setColores] = useState([])
   const [coloresInterior, setColoresInterior] = useState([])
   const [condiciones, setCondiciones] = useState([])
+  const [tiposVehiculo, setTiposVehiculo] = useState([])
   const [transmisiones, setTransmisiones] = useState([])
   const [combustibles, setCombustibles] = useState([])
   const [monedas, setMonedas] = useState([])
@@ -79,7 +81,8 @@ export default function VehiculoForm() {
       api.get('/api/monedas'),
       api.get('/api/titulares-stock?pageSize=200'),
       api.get('/api/clasificaciones?pageSize=200'),
-    ]).then(([m, c, ci, cond, trans, comb, mon, tit, clas]) => {
+      api.get('/api/catalogos-vehiculo?tipo=tipos-vehiculo'),
+    ]).then(([m, c, ci, cond, trans, comb, mon, tit, clas, tipoVeh]) => {
       setMarcas(m.data)
       setColores(c.data)
       setColoresInterior(ci.data)
@@ -89,6 +92,13 @@ export default function VehiculoForm() {
       setMonedas(mon.data)
       setTitulares(tit.data)
       setClasificaciones(clas.data)
+      setTiposVehiculo(tipoVeh.data)
+
+      // Tipo por defecto: Auto, solo al crear (no pisa lo ya cargado al editar)
+      if (!esEdicion) {
+        const auto = tipoVeh.data.find((t) => t.nombre === 'Auto')
+        if (auto) setForm((f) => (f.tipo_vehiculo_id ? f : { ...f, tipo_vehiculo_id: auto.id }))
+      }
 
       // Moneda por defecto: Peso Argentino, solo al crear (no pisa lo ya cargado al editar)
       if (!esEdicion) {
@@ -109,6 +119,7 @@ export default function VehiculoForm() {
         const res = await api.get(`/api/vehiculos/detalle?id=${id}`)
         const v = res.data
         setForm({
+          tipo_vehiculo_id: v.tipo_vehiculo_id || '',
           condicion_id: v.condicion_id || '',
           año_modelo: v.año_modelo || '',
           año_fab: v.año_fab || '',
@@ -187,8 +198,8 @@ export default function VehiculoForm() {
     e.preventDefault()
     setError('')
 
-    if (!form.patente || !form.marca_id || !form.modelo_id || !form.condicion_id) {
-      setError('Patente, Marca, Modelo y Condición son obligatorios')
+    if (!form.patente || !form.marca_id || !form.modelo_id || !form.condicion_id || !form.tipo_vehiculo_id) {
+      setError('Tipo de Vehículo, Patente, Marca, Modelo y Condición son obligatorios')
       setTab('Básicos')
       return
     }
@@ -230,6 +241,7 @@ export default function VehiculoForm() {
         tipo_propiedad_id: form.tipo_propiedad_id || null,
         titular_stock_id: form.titular_stock_id || null,
         clasificacion_id: form.clasificacion_id || null,
+        tipo_vehiculo_id: form.tipo_vehiculo_id || null,
         tipo_propiedad_es_consignacion: esConsignacion,
       }
 
@@ -293,8 +305,8 @@ export default function VehiculoForm() {
                   </p>
                 </div>
               )}
+              <Select label="Tipo de Vehículo *" value={form.tipo_vehiculo_id} onChange={(v) => actualizar('tipo_vehiculo_id', v)} opciones={tiposVehiculo} placeholder="Seleccione" onCrear={() => setModalCrear('tipoVehiculo')} />
               <Select label="Condición *" value={form.condicion_id} onChange={(v) => actualizar('condicion_id', v)} opciones={condiciones} placeholder="Seleccione" onCrear={() => setModalCrear('condicion')} />
-              <div />
               <Input label="Año Modelo" type="number" value={form.año_modelo} onChange={(v) => actualizar('año_modelo', v)} max={anioActual} />
               <Input label="Año Fab." type="number" value={form.año_fab} onChange={(v) => actualizar('año_fab', v)} max={anioActual} />
               <Input label="Patente *" value={form.patente} onChange={(v) => actualizar('patente', v)} placeholder="ABC-123" />
@@ -509,6 +521,21 @@ export default function VehiculoForm() {
         onCreado={(nuevo) => {
           setColoresInterior((c) => [...c, nuevo])
           actualizar('color_interior_id', nuevo.id)
+        }}
+        onCerrar={() => setModalCrear(null)}
+      />
+
+      <ModalCrearRapido
+        abierto={modalCrear === 'tipoVehiculo'}
+        titulo="Nuevo Tipo de Vehículo"
+        campos={[{ key: 'nombre', label: 'Nombre', tipo: 'texto', requerido: true }]}
+        onCrear={async (datos) => {
+          const res = await api.post('/api/catalogos-vehiculo?tipo=tipos-vehiculo', datos)
+          return res.data
+        }}
+        onCreado={(nuevo) => {
+          setTiposVehiculo((t) => [...t, nuevo])
+          actualizar('tipo_vehiculo_id', nuevo.id)
         }}
         onCerrar={() => setModalCrear(null)}
       />

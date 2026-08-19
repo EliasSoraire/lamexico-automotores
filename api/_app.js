@@ -28,6 +28,16 @@ import perfilIndex from './_routes/perfil/index.js'
 import perfilPassword from './_routes/perfil/password.js'
 import canalesOrigenIndex from './_routes/canales-origen/index.js'
 import canalesOrigenDetalle from './_routes/canales-origen/detalle.js'
+import financierasIndex from './_routes/financieras/index.js'
+import financierasDetalle from './_routes/financieras/detalle.js'
+import catalogosFinanzas from './_routes/catalogos-finanzas/index.js'
+import planesPagoIndex from './_routes/planes-pago/index.js'
+import planesPagoDetalle from './_routes/planes-pago/detalle.js'
+import planesPagoCuotas from './_routes/planes-pago/cuotas.js'
+import cuentasCorrientesIndex from './_routes/cuentas-corrientes/index.js'
+import cuentasCorrientesDetalle from './_routes/cuentas-corrientes/detalle.js'
+import facturasIndex from './_routes/facturas/index.js'
+import facturasDetalle from './_routes/facturas/detalle.js'
 import catalogosCliente from './_routes/catalogos-cliente/index.js'
 import clientesIndex from './_routes/clientes/index.js'
 import clientesDetalle from './_routes/clientes/detalle.js'
@@ -82,6 +92,16 @@ const rutas = [
   ['/api/perfil/password', perfilPassword],
   ['/api/canales-origen', canalesOrigenIndex],
   ['/api/canales-origen/detalle', canalesOrigenDetalle],
+  ['/api/financieras', financierasIndex],
+  ['/api/financieras/detalle', financierasDetalle],
+  ['/api/catalogos-finanzas', catalogosFinanzas],
+  ['/api/planes-pago', planesPagoIndex],
+  ['/api/planes-pago/detalle', planesPagoDetalle],
+  ['/api/planes-pago/cuotas', planesPagoCuotas],
+  ['/api/cuentas-corrientes', cuentasCorrientesIndex],
+  ['/api/cuentas-corrientes/detalle', cuentasCorrientesDetalle],
+  ['/api/facturas', facturasIndex],
+  ['/api/facturas/detalle', facturasDetalle],
   ['/api/catalogos-cliente', catalogosCliente],
   ['/api/clientes', clientesIndex],
   ['/api/clientes/detalle', clientesDetalle],

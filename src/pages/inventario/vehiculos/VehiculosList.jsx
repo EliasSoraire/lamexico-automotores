@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Plus, X, Eye, Pencil, Trash2, RefreshCw, Car, CheckCircle2, Wrench, Truck, Bookmark } from 'lucide-react'
+import { Plus, X, Eye, Pencil, Trash2, RefreshCw, Car, CheckCircle2, Wrench, Truck, Bookmark, Bike } from 'lucide-react'
 import { api } from '../../../lib/api'
 import Paginacion from '../../../components/ui/Paginacion'
 import ConfirmarEliminacion from '../../../components/ui/ConfirmarEliminacion'
@@ -16,11 +16,12 @@ export default function VehiculosList() {
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState('')
 
-  const [filtros, setFiltros] = useState({ busqueda: '', estado: '', condicion_id: '', gnc: '', titular_stock_id: '', clasificacion_id: '' })
+  const [filtros, setFiltros] = useState({ busqueda: '', estado: '', condicion_id: '', gnc: '', titular_stock_id: '', clasificacion_id: '', tipo_vehiculo_id: '' })
   const [filtrosAplicados, setFiltrosAplicados] = useState(filtros)
   const [condiciones, setCondiciones] = useState([])
   const [titulares, setTitulares] = useState([])
   const [clasificaciones, setClasificaciones] = useState([])
+  const [tiposVehiculo, setTiposVehiculo] = useState([])
 
   const [page, setPage] = useState(1)
   const [pageSize] = useState(25)
@@ -35,6 +36,7 @@ export default function VehiculosList() {
     api.get('/api/catalogos-vehiculo?tipo=condiciones').then((r) => setCondiciones(r.data)).catch(() => {})
     api.get('/api/titulares-stock?pageSize=200').then((r) => setTitulares(r.data)).catch(() => {})
     api.get('/api/clasificaciones?pageSize=200').then((r) => setClasificaciones(r.data)).catch(() => {})
+    api.get('/api/catalogos-vehiculo?tipo=tipos-vehiculo').then((r) => setTiposVehiculo(r.data)).catch(() => {})
   }, [])
 
   const cargar = useCallback(async () => {
@@ -66,7 +68,7 @@ export default function VehiculosList() {
   }
 
   function limpiarFiltros() {
-    const vacio = { busqueda: '', estado: '', condicion_id: '', gnc: '', titular_stock_id: '', clasificacion_id: '' }
+    const vacio = { busqueda: '', estado: '', condicion_id: '', gnc: '', titular_stock_id: '', clasificacion_id: '', tipo_vehiculo_id: '' }
     setFiltros(vacio)
     setFiltrosAplicados(vacio)
     setPage(1)
@@ -112,6 +114,19 @@ export default function VehiculosList() {
       {/* Filtros */}
       <div className="bg-white border border-slate-400 rounded-xl p-4 mb-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-3">
+          <div>
+            <label className="text-xs font-medium text-slate-700 mb-1 block">Tipo de Vehículo</label>
+            <select
+              value={filtros.tipo_vehiculo_id}
+              onChange={(e) => setFiltros({ ...filtros, tipo_vehiculo_id: e.target.value })}
+              className="w-full text-sm border border-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">Todos los tipos</option>
+              {tiposVehiculo.map((t) => (
+                <option key={t.id} value={t.id}>{t.nombre}</option>
+              ))}
+            </select>
+          </div>
           <div>
             <label className="text-xs font-medium text-slate-700 mb-1 block">Búsqueda</label>
             <input
@@ -204,12 +219,13 @@ export default function VehiculosList() {
       </div>
 
       {/* Contadores */}
-      <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-4">
+      <div className="grid grid-cols-2 sm:grid-cols-6 gap-4 mb-4">
         <TarjetaContador icono={<Car size={18} className="text-slate-600" />} bg="bg-slate-100" label="Total" valor={contadores.total} />
         <TarjetaContador icono={<CheckCircle2 size={18} className="text-green-600" />} bg="bg-green-50" label="Disponibles" valor={contadores.disponibles} />
         <TarjetaContador icono={<Wrench size={18} className="text-amber-600" />} bg="bg-amber-50" label="En Preparación" valor={contadores.en_preparacion} />
         <TarjetaContador icono={<Truck size={18} className="text-blue-600" />} bg="bg-blue-50" label="En Tránsito" valor={contadores.en_transito} />
         <TarjetaContador icono={<Bookmark size={18} className="text-purple-600" />} bg="bg-purple-50" label="Reservados" valor={contadores.reservados} />
+        <TarjetaContador icono={<Bike size={18} className="text-pink-600" />} bg="bg-pink-50" label="Motos" valor={contadores.motos} />
       </div>
 
       {error && (
@@ -241,7 +257,10 @@ export default function VehiculosList() {
               vehiculos.map((v) => (
                 <tr key={v.id} className="hover:bg-slate-50">
                   <td className="px-4 py-3">
-                    <div className="font-medium text-slate-800">
+                    <div className="font-medium text-slate-800 flex items-center gap-1.5">
+                      {v.tipos_vehiculo?.nombre === 'Moto'
+                        ? <Bike size={14} className="text-pink-600 shrink-0" />
+                        : <Car size={14} className="text-slate-500 shrink-0" />}
                       {v.marcas?.nombre} {v.modelos?.nombre}
                     </div>
                     <div className="text-xs text-slate-600">

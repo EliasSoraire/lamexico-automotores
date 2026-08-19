@@ -7,6 +7,7 @@ const TABLAS_PERMITIDAS = {
   transmisiones: { tabla: 'transmisiones', tieneActivo: true, tieneColor: false },
   combustibles: { tabla: 'combustibles', tieneActivo: true, tieneColor: false },
   'colores-interior': { tabla: 'colores_interior', tieneActivo: false, tieneColor: true },
+  'tipos-vehiculo': { tabla: 'tipos_vehiculo', tieneActivo: true, tieneColor: false },
 }
 
 export default async function handler(req, res) {

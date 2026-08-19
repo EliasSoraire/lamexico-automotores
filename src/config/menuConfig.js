@@ -40,10 +40,10 @@ export const menuConfig = [
     nombre: 'Finanzas',
     icono: 'DollarSign',
     items: [
-      { nombre: 'Facturas', path: '/finanzas/facturas', proximamente: true },
-      { nombre: 'Planes de Pago', path: '/finanzas/planes-pago', proximamente: true },
-      { nombre: 'Financieras', path: '/finanzas/financieras', proximamente: true },
-      { nombre: 'Cuentas Corrientes', path: '/finanzas/cuentas-corrientes', proximamente: true },
+      { nombre: 'Facturas', path: '/finanzas/facturas', proximamente: false },
+      { nombre: 'Planes de Pago', path: '/finanzas/planes-pago', proximamente: false },
+      { nombre: 'Financieras', path: '/finanzas/financieras', proximamente: false },
+      { nombre: 'Cuentas Corrientes', path: '/finanzas/cuentas-corrientes', proximamente: false },
     ],
   },
   {

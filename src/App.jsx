@@ -36,6 +36,19 @@ import Perfil from './pages/perfil/Perfil'
 import CanalesOrigenList from './pages/ventas/canales-origen/CanalesOrigenList'
 import CanalOrigenForm from './pages/ventas/canales-origen/CanalOrigenForm'
 
+import FinancierasList from './pages/finanzas/financieras/FinancierasList'
+import FinancieraForm from './pages/finanzas/financieras/FinancieraForm'
+
+import PlanesPagoList from './pages/finanzas/planes-pago/PlanesPagoList'
+import PlanPagoDetalle from './pages/finanzas/planes-pago/PlanPagoDetalle'
+
+import CuentasCorrientesList from './pages/finanzas/cuentas-corrientes/CuentasCorrientesList'
+import CuentaCorrienteDetalle from './pages/finanzas/cuentas-corrientes/CuentaCorrienteDetalle'
+
+import FacturasList from './pages/finanzas/facturas/FacturasList'
+import FacturaForm from './pages/finanzas/facturas/FacturaForm'
+import FacturaDetalle from './pages/finanzas/facturas/FacturaDetalle'
+
 import ClientesList from './pages/ventas/clientes/ClientesList'
 import ClienteForm from './pages/ventas/clientes/ClienteForm'
 import ClienteDetalle from './pages/ventas/clientes/ClienteDetalle'
@@ -67,6 +80,10 @@ const RUTAS_CONSTRUIDAS = new Set([
   '/configuracion/usuarios',
   '/configuracion/general',
   '/ventas/canales-origen',
+  '/finanzas/financieras',
+  '/finanzas/planes-pago',
+  '/finanzas/cuentas-corrientes',
+  '/finanzas/facturas',
   '/ventas/clientes',
   '/ventas/consultas',
   '/ventas/items-adicionales',
@@ -163,6 +180,20 @@ function App() {
             <Route path="/ventas/canales-origen" element={<CanalesOrigenList />} />
             <Route path="/ventas/canales-origen/nuevo" element={<CanalOrigenForm />} />
             <Route path="/ventas/canales-origen/:id/editar" element={<CanalOrigenForm />} />
+
+            <Route path="/finanzas/financieras" element={<FinancierasList />} />
+            <Route path="/finanzas/financieras/nuevo" element={<FinancieraForm />} />
+            <Route path="/finanzas/financieras/:id/editar" element={<FinancieraForm />} />
+
+            <Route path="/finanzas/planes-pago" element={<PlanesPagoList />} />
+            <Route path="/finanzas/planes-pago/:id" element={<PlanPagoDetalle />} />
+
+            <Route path="/finanzas/cuentas-corrientes" element={<CuentasCorrientesList />} />
+            <Route path="/finanzas/cuentas-corrientes/:id" element={<CuentaCorrienteDetalle />} />
+
+            <Route path="/finanzas/facturas" element={<FacturasList />} />
+            <Route path="/finanzas/facturas/nuevo" element={<FacturaForm />} />
+            <Route path="/finanzas/facturas/:id" element={<FacturaDetalle />} />
 
             {/* Clientes */}
             <Route path="/ventas/clientes" element={<ClientesList />} />

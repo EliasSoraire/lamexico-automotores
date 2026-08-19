@@ -26,7 +26,7 @@ async function verVehiculo(req, res, id) {
        colores_interior(id, nombre), condiciones_vehiculo(id, nombre),
        transmisiones(id, nombre), combustibles(id, nombre), monedas(id, nombre, simbolo),
        tipos_propiedad(id, nombre), titulares_stock(id, nombre), clasificaciones_vehiculos(id, nombre, color_hex),
-       sucursales(id, nombre)`
+       sucursales(id, nombre), tipos_vehiculo(id, nombre)`
     )
     .eq('id', id)
     .maybeSingle()
@@ -87,6 +87,7 @@ async function actualizarVehiculo(req, res, id) {
       tipo_propiedad_id: body.tipo_propiedad_id || null,
       titular_stock_id: body.tipo_propiedad_es_consignacion ? null : body.titular_stock_id || null,
       clasificacion_id: body.clasificacion_id || null,
+      tipo_vehiculo_id: body.tipo_vehiculo_id || null,
       observaciones: body.observaciones || null,
       fecha_actualizacion: new Date().toISOString(),
     }

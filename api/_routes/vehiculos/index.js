@@ -13,7 +13,7 @@ export default async function handler(req, res) {
 }
 
 async function aplicarFiltros(query, req) {
-  const { busqueda, estado, condicion_id, titular_stock_id, gnc, clasificacion_id } = req.query
+  const { busqueda, estado, condicion_id, titular_stock_id, gnc, clasificacion_id, tipo_vehiculo_id } = req.query
 
   if (busqueda) {
     // Buscamos en 3 frentes por separado (texto directo, marca, modelo) y
@@ -59,6 +59,7 @@ async function aplicarFiltros(query, req) {
   if (gnc === 'true') query = query.eq('gnc', true)
   if (gnc === 'false') query = query.eq('gnc', false)
   if (clasificacion_id) query = query.eq('clasificacion_id', clasificacion_id)
+  if (tipo_vehiculo_id) query = query.eq('tipo_vehiculo_id', tipo_vehiculo_id)
 
   // Se devuelve envuelto en un objeto (no el builder "pelado") para evitar que,
   // al hacer "return" de un valor con .then() dentro de una función async,
@@ -78,7 +79,8 @@ async function listarVehiculos(req, res) {
       .select(
         `id, patente, año_modelo, kilometraje, estado, precio_venta, moneda_id,
          marcas(nombre), modelos(nombre), colores(nombre, codigo_hex),
-         condiciones_vehiculo(nombre), sucursales(nombre), monedas(simbolo)`,
+         condiciones_vehiculo(nombre), sucursales(nombre), monedas(simbolo),
+         tipos_vehiculo(id, nombre)`,
         { count: 'exact' }
       )
 
@@ -106,6 +108,11 @@ async function listarVehiculos(req, res) {
       .from('vehiculos')
       .select('id', { count: 'exact', head: true })
 
+    const { count: totalMotos } = await supabaseAdmin
+      .from('vehiculos')
+      .select('id, tipos_vehiculo!inner(nombre)', { count: 'exact', head: true })
+      .eq('tipos_vehiculo.nombre', 'Moto')
+
     return res.status(200).json({
       data,
       total: count || 0,
@@ -118,6 +125,7 @@ async function listarVehiculos(req, res) {
         en_preparacion: conteos['En Preparación'],
         en_transito: conteos['En Tránsito'],
         reservados: conteos['Reservado'],
+        motos: totalMotos || 0,
       },
     })
   } catch (err) {
@@ -168,6 +176,7 @@ async function crearVehiculo(req, res) {
       tipo_propiedad_id: body.tipo_propiedad_id || null,
       titular_stock_id: body.tipo_propiedad_es_consignacion ? null : body.titular_stock_id || null,
       clasificacion_id: body.clasificacion_id || null,
+      tipo_vehiculo_id: body.tipo_vehiculo_id || null,
       observaciones: body.observaciones || null,
     }
 
