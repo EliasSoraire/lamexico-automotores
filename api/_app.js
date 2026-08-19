@@ -42,6 +42,10 @@ import catalogosPresupuesto from './_routes/catalogos-presupuesto/index.js'
 import presupuestosIndex from './_routes/presupuestos/index.js'
 import presupuestosDetalle from './_routes/presupuestos/detalle.js'
 import presupuestosPermutas from './_routes/presupuestos/permutas.js'
+import catalogosVenta from './_routes/catalogos-venta/index.js'
+import ventasIndex from './_routes/ventas/index.js'
+import ventasDetalle from './_routes/ventas/detalle.js'
+import ventasItems from './_routes/ventas/items.js'
 
 const app = express()
 app.use(express.json())
@@ -92,6 +96,10 @@ const rutas = [
   ['/api/presupuestos', presupuestosIndex],
   ['/api/presupuestos/detalle', presupuestosDetalle],
   ['/api/presupuestos/permutas', presupuestosPermutas],
+  ['/api/catalogos-venta', catalogosVenta],
+  ['/api/ventas', ventasIndex],
+  ['/api/ventas/detalle', ventasDetalle],
+  ['/api/ventas/items', ventasItems],
 ]
 
 rutas.forEach(([ruta, handler]) => {

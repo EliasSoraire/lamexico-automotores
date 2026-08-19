@@ -30,7 +30,7 @@ export const menuConfig = [
       { nombre: 'Clientes', path: '/ventas/clientes', proximamente: false },
       { nombre: 'Consultas', path: '/ventas/consultas', proximamente: false },
       { nombre: 'Presupuesto', path: '/ventas/presupuestos', proximamente: false },
-      { nombre: 'Gestión de Ventas', path: '/ventas/gestion', proximamente: true },
+      { nombre: 'Gestión de Ventas', path: '/ventas/gestion', proximamente: false },
       { nombre: 'Ítems Adicionales', path: '/ventas/items-adicionales', proximamente: false },
       { nombre: 'Canales de Origen', path: '/ventas/canales-origen', proximamente: false },
     ],

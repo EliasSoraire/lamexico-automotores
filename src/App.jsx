@@ -50,6 +50,9 @@ import ItemAdicionalForm from './pages/ventas/items-adicionales/ItemAdicionalFor
 import PresupuestosList from './pages/ventas/presupuestos/PresupuestosList'
 import PresupuestoForm from './pages/ventas/presupuestos/PresupuestoForm'
 
+import VentasList from './pages/ventas/gestion-ventas/VentasList'
+import VentaForm from './pages/ventas/gestion-ventas/VentaForm'
+
 import { menuConfig } from './config/menuConfig'
 
 // Rutas de módulos que ya tienen pantallas propias construidas.
@@ -68,6 +71,7 @@ const RUTAS_CONSTRUIDAS = new Set([
   '/ventas/consultas',
   '/ventas/items-adicionales',
   '/ventas/presupuestos',
+  '/ventas/gestion',
 ])
 
 function generarRutasDeModulos() {
@@ -181,6 +185,12 @@ function App() {
             <Route path="/ventas/presupuestos" element={<PresupuestosList />} />
             <Route path="/ventas/presupuestos/nuevo" element={<PresupuestoForm />} />
             <Route path="/ventas/presupuestos/:id/editar" element={<PresupuestoForm />} />
+
+            {/* Gestión de Ventas */}
+            <Route path="/ventas/gestion" element={<VentasList />} />
+            <Route path="/ventas/gestion/nueva" element={<VentaForm />} />
+            <Route path="/ventas/gestion/:id" element={<VentaForm />} />
+            <Route path="/ventas/gestion/:id/editar" element={<VentaForm />} />
 
             {generarRutasDeModulos()}
           </Route>
